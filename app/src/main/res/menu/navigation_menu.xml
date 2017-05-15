@@ -2,15 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/first_layout"
-        android:title="@string/first_layout" />
+        android:id="@+id/mes_absences"
+        android:title="@string/mes_absences"
+        android:icon="@mipmap/ic_person_black_24dp"/>
 
-    <item android:id="@+id/second_layout"
-        android:title="@string/second_layout"/>
+    <item
+        android:id="@+id/mes_statistiques"
+        android:title="@string/mes_statistiques"
+        android:icon="@mipmap/ic_trending_up_black_24dp"/>
 
-    <item android:id="@+id/third_layout"
-        android:title="@string/third_layout"/>
+    <item
+        android:id="@+id/prevenir_absence"
+        android:title="@string/Prevenir_absence" />
 
-    <item android:id="@+id/logout"
-        android:title="@string/log_out"/>
+    <item
+        android:id="@+id/deconnexion"
+        android:title="@string/se_deconnecter"
+        android:icon="@mipmap/ic_exit_to_app_black_24dp"/>
 </menu>
