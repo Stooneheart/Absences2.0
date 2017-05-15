@@ -4,4 +4,9 @@
     <string name="Username">Username</string>
     <string name="password">Password</string>
     <string name="connexion">Connection</string>
+    <string name="first_layout">First Layout</string>
+    <string name="second_layout">Second Layout</string>
+    <string name="log_out">Log out</string>
+    <string name="third_layout">Third Layout</string>
+    <string name="button">Button</string>
 </resources>
