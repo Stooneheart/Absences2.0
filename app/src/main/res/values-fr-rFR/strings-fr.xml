@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Absences EPF</string>
+    <string name="login">Identification</string>
+    <string name="Username">Utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="connexion">Connexion</string>
+    <string name="mes_absences">Mes absences</string>
+    <string name="mes_statistiques">Mes Statistiques</string>
+    <string name="se_deconnecter">Se déconnecter</string>
+    <string name="Prevenir_absence">Prévenir d\'une absence</string>
+    <string name="button">Bouton</string>
+    <string name="open">Ouvrir</string>
+    <string name="close">Fermer</string>
+    <string name="menu">Menu</string>
+</resources>

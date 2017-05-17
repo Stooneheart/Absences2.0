@@ -4,10 +4,10 @@
     <string name="Username">Username</string>
     <string name="password">Password</string>
     <string name="connexion">Connection</string>
-    <string name="mes_absences">Mes absences</string>
-    <string name="mes_statistiques">Mes Statistiques</string>
-    <string name="se_deconnecter">Se déconnecter</string>
-    <string name="Prevenir_absence">Prévenir d\'une absence</string>
+    <string name="mes_absences">My absences</string>
+    <string name="mes_statistiques">My stats</string>
+    <string name="se_deconnecter">Disconnect</string>
+    <string name="Prevenir_absence">Warn an absence</string>
     <string name="button">Button</string>
     <string name="open">Open</string>
     <string name="close">Close</string>

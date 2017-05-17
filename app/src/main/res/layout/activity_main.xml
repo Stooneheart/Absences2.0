@@ -57,11 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginRight="35dp"
-        android:text="@string/login"
+        android:text="@string/Username"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toBottomOf="@+id/editText3"
         app:layout_constraintRight_toLeftOf="@+id/editText3"
-        tools:text="@string/login" />
+        tools:text="@string/Username" />
 
     <TextView
         android:id="@+id/textView8"
