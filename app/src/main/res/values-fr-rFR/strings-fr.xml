@@ -14,4 +14,15 @@
     <string name="close">Fermer</string>
     <string name="menu">Menu</string>
     <string name="WPassword">Mauvaise combinaison identifiant et mot de passe. Recommencez.</string>
+    <string name="call_api">appeler_api</string>
+    <string name="call_api_2">appeler_api_2</string>
+    <string name="cours">cours</string>
+    <string name="heure_debut">heure_debut</string>
+    <string name="heure_fin">heure_fin</string>
+    <string name="nom_prof">nom_prof</string>
+    <string name="prenom_prof">prenom_prof</string>
+    <string name="statut">statut</string>
+    <string name="layout_stats">Layout stats</string>
+    <string name="layout_prevenir_absence">Layout prevenir absence</string>
+    <string name="layout_absences">Layout absences</string>
 </resources>

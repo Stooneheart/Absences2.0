@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/mes_absences"
-        android:title="@string/mes_absences"
-        android:icon="@mipmap/ic_person_black_24dp"/>
+    <item android:title="Fonctions">
+        <menu>
+            <item
+                android:id="@+id/mes_absences"
+                android:title="@string/mes_absences"
+                android:icon="@mipmap/ic_person_black_24dp"/>
 
-    <item
-        android:id="@+id/mes_statistiques"
-        android:title="@string/mes_statistiques"
-        android:icon="@mipmap/ic_trending_up_black_24dp"/>
-
-    <item
-        android:id="@+id/prevenir_absence"
-        android:title="@string/Prevenir_absence" />
-
-    <item
-        android:id="@+id/deconnexion"
-        android:title="@string/se_deconnecter"
-        android:icon="@mipmap/ic_exit_to_app_black_24dp"/>
+            <item
+                android:id="@+id/mes_statistiques"
+                android:title="@string/mes_statistiques"
+                android:icon="@mipmap/ic_trending_up_black_24dp"/>
+            <item
+                android:id="@+id/prevenir_absence"
+                android:title="@string/Prevenir_absence" />
+        </menu>
+    </item>
+    <item android:title="Autres">
+        <menu>
+            <item
+                android:id="@+id/deconnexion"
+                android:title="@string/se_deconnecter"
+                android:icon="@mipmap/ic_exit_to_app_black_24dp"/>
+        </menu>
+    </item>
 </menu>
+

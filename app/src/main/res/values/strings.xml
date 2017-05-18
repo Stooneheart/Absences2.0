@@ -13,4 +13,15 @@
     <string name="close">Close</string>
     <string name="menu">Menu</string>
     <string name="WPassword">Wrong username and/or password. Try again.</string>
+    <string name="call_api">call_api</string>
+    <string name="call_api_2">call_api_2</string>
+    <string name="cours">subject</string>
+    <string name="heure_debut">beggining hour</string>
+    <string name="heure_fin">end hour</string>
+    <string name="nom_prof">teacher surname</string>
+    <string name="prenom_prof">teacher forename</string>
+    <string name="statut">statut</string>
+    <string name="layout_stats">Layout stats</string>
+    <string name="layout_prevenir_absence">Layout warn an absence</string>
+    <string name="layout_absences">Layout absences</string>
 </resources>
