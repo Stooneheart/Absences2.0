@@ -12,16 +12,15 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
         android:layout_marginTop="8dp"
         android:text="@string/login"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.503"
-        tools:text="@string/login" />
+        tools:text="@string/login"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/editText3"
@@ -84,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:onClick="login"
         android:text="@string/connexion"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -101,4 +101,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>

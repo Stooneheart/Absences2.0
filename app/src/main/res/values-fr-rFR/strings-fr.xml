@@ -13,4 +13,5 @@
     <string name="open">Ouvrir</string>
     <string name="close">Fermer</string>
     <string name="menu">Menu</string>
+    <string name="WPassword">Mauvaise combinaison identifiant et mot de passe. Recommencez.</string>
 </resources>
