@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -20,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class AccueilActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +49,15 @@ public class AccueilActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        String user = getIntent().getStringExtra("user");
+        try {
+            JSONObject jsonObject = new JSONObject(user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        TextView bienvenue = (TextView) findViewById(R.id.textBienvenue);
+        bienvenue.setText(bienvenue.getText() + " " + user);
     }
 
     @Override

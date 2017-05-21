@@ -26,5 +26,6 @@
     <string name="layout_stats">Layout stats</string>
     <string name="layout_prevenir_absence">Layout warn an absence</string>
     <string name="layout_absences">Layout absences</string>
+    <string name="bienvenue">Bienvenue :</string>
 
 </resources>

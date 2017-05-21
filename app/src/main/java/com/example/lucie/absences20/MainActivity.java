@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue queue1;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,37 +51,18 @@ public class MainActivity extends AppCompatActivity {
         String usname = username.getText().toString();
         String pword = password.getText().toString();
         queue1 = Volley.newRequestQueue(this);
-        String url = "http://absence2epf.net16.net/api/token.php?identifiant="+ usname +"&pw=" +pword;
-        intent = new Intent(this, AccueilActivity.class);
+        String url = "http://absence2epf.net16.net/api/token.php?identifiant=" + usname + "&pw=" + pword;
+        intent = new Intent(this, RedirectingActivitiy.class);
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
-                        String url1 = "http://absence2epf.net16.net/api/utilisateur.php?token=" + response;
-                        StringRequest jsObjReq = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                try {
-                                    JSONObject jsonType = new JSONObject(response);
-                                    type = jsonType.get("type").toString();
-
-                                    startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // TODO Auto-generated method stub
-                            }
-                        });
+                        intent.putExtra("token", response);
+                        startActivity(intent);
                     }
+
                 }, new Response.ErrorListener() {
 
                     @Override
@@ -93,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
         queue1.add(jsObjRequest);
-    }
-
-    public String getType() {
-        return type;
     }
 }

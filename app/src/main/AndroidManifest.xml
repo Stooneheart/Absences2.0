@@ -25,6 +25,9 @@
             android:name=".AccueilActivity"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
+        <activity android:name=".RedirectingActivitiy"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape">></activity>
     </application>
 
 </manifest>
