@@ -8,6 +8,8 @@
     <string name="mes_statistiques">My stats</string>
     <string name="se_deconnecter">Disconnect</string>
     <string name="Prevenir_absence">Warn an absence</string>
+    <string name="Autres">Others</string>
+    <string name="Fonctions">Fonctions</string>
     <string name="button">Button</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -24,4 +26,5 @@
     <string name="layout_stats">Layout stats</string>
     <string name="layout_prevenir_absence">Layout warn an absence</string>
     <string name="layout_absences">Layout absences</string>
+
 </resources>
