@@ -1,15 +1,14 @@
 package com.example.lucie.absences20;
 
-import android.app.FragmentManager;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -22,10 +21,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class AccueilActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AccueilActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
+    NavigationView navigationView = null;
+    ActionBarDrawerToggle toggle;
     private AbsenceEleve absences;
     private TextView tvRepCours;
     private TextView tvRepDateD;
@@ -33,56 +33,67 @@ public class AccueilActivity extends AppCompatActivity implements NavigationView
     private TextView tvRepPrenomP;
     private TextView tvRepNomP;
     private TextView tvRepStatut;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item){
-
-        int id = item.getItemId();
-        FragmentManager fragmentM = getFragmentManager();
-
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-        if (id == R.id.mes_absences){
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new MesAbsencesFragment()).commit();
-        } else if (id == R.id.mes_statistiques){
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new MesStatistiquesFragment()).commit();
-        } else if (id == R.id.prevenir_absence){
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new PrevenirAbsenceFragment()).commit();
-        } else if (id == R.id.deconnexion){
-
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(mToggle.onOptionsItemSelected(item)) {
+        if(toggle.onOptionsItemSelected(item)) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.mes_absences) {
+            MesAbsencesFragment absencesFragment = new MesAbsencesFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, absencesFragment).commit();
+        } else if (id == R.id.mes_statistiques) {
+            MesStatistiquesFragment statsFragment = new MesStatistiquesFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, statsFragment).commit();
+
+        } else if (id == R.id.prevenir_absence) {
+            PrevenirAbsenceFragment prevenirAbsenceFragment = new PrevenirAbsenceFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, prevenirAbsenceFragment).commit();
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
 
     public void OnClick(View v){
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -209,4 +220,3 @@ public class AccueilActivity extends AppCompatActivity implements NavigationView
         queue.add(jsObjRequest);
     }
 }
-

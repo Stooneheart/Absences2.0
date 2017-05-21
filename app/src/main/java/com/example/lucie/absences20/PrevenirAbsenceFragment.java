@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * Created by Guillaume Rosenrib on 17/05/2017.
  */
 
-public class PrevenirAbsenceFragment extends android.app.Fragment {
+public class PrevenirAbsenceFragment extends Fragment {
 
     View mView;
 

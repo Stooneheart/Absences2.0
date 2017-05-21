@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Fonctions">
+    <item android:title="@string/Fonctions">
         <menu>
             <item
                 android:id="@+id/mes_absences"
@@ -17,7 +17,7 @@
                 android:title="@string/Prevenir_absence" />
         </menu>
     </item>
-    <item android:title="Autres">
+    <item android:title="@string/Autres">
         <menu>
             <item
                 android:id="@+id/deconnexion"
