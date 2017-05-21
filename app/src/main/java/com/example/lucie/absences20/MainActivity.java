@@ -69,10 +69,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
                         wrongPassword.setText(message);
-
                     }
                 });
-
         queue1.add(jsObjRequest);
     }
 }
