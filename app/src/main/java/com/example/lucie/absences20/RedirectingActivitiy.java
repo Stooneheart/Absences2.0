@@ -36,6 +36,7 @@ public class RedirectingActivitiy extends AppCompatActivity {
                     System.out.println("Ca marche " + type);
                     intent.putExtra("user", jsonObject.toString());
 
+                    RedirectingActivitiy.this.finish();
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
