@@ -69,6 +69,7 @@ public class AccueilActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+
             super.onBackPressed();
         }
     }
@@ -78,6 +79,7 @@ public class AccueilActivity extends AppCompatActivity
 
         if(item.getItemId() == R.id.disconnect){
             Intent intent = new Intent(this,MainActivity.class);
+            AccueilActivity.this.finish();
             startActivity(intent);
         }
 
@@ -110,6 +112,7 @@ public class AccueilActivity extends AppCompatActivity
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
+            AccueilActivity.this.finish();
             startActivity(intent);
         }
 
@@ -260,4 +263,6 @@ public class AccueilActivity extends AppCompatActivity
 
         queue.add(jsObjRequest);
     }
+
+
 }
