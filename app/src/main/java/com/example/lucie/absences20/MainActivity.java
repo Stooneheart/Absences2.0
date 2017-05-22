@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Context context = getApplicationContext();
-                            CharSequence text = "Erreur lors de la connexion ! Identifiant ou mot de passe incorrect";
+                            CharSequence text = message;
 
                             Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
                             toast.show();
