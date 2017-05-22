@@ -100,20 +100,33 @@ public class AccueilActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.mes_absences) {
-            Intent intent2 = new Intent(this, TotalsAbsences.class);
-            startActivity(intent2);
-
-            //TotalsAbsencesFragment absencesFragment = new TotalsAbsencesFragment();
-            //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            //fragmentTransaction.replace(R.id.fragment_container, absencesFragment).commit();
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent2 = new Intent(this, TotalsAbsences.class);
+                intent2.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent2);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             //MesAbsencesFragment absencesFragment = new MesAbsencesFragment();
             //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             //fragmentTransaction.replace(R.id.fragment_container, absencesFragment).commit();
         } else if (id == R.id.mes_statistiques) {
-            MesStatistiquesFragment statsFragment = new MesStatistiquesFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, statsFragment).commit();
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //MesStatistiquesFragment statsFragment = new MesStatistiquesFragment();
+            //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            //fragmentTransaction.replace(R.id.fragment_container, statsFragment).commit();
 
         } else if (id == R.id.prevenir_absence) {
             PrevenirAbsenceFragment prevenirAbsenceFragment = new PrevenirAbsenceFragment();
@@ -275,5 +288,7 @@ public class AccueilActivity extends AppCompatActivity
         queue.add(jsObjRequest);
     }
 
-
+    public String getUserInfos() {
+        return userInfos;
+    }
 }

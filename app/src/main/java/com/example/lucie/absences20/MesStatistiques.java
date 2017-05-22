@@ -1,58 +1,31 @@
 package com.example.lucie.absences20;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.support.v7.widget.Toolbar;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by lucie on 22/05/2017.
  */
 
-public class TotalsAbsences extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MesStatistiques extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
-    private static String TAG="TotalsAbsences";
-    private ListView mListView;
     private String userInfos;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.totals_absences);
-        mListView = (ListView) findViewById(R.id.listView);
-        Log.d(TAG, "OnCreate : started. ");
-
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Lucie");
-        names.add("Guillaume");
-        names.add("Alexis");
-        names.add("Clément");
-        names.add("Thomas");
-        names.add("Olivier");
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, names);
-        mListView.setAdapter(adapter);
+        setContentView(R.layout.mes_statistiques);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
@@ -98,6 +71,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
+
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 

@@ -28,6 +28,14 @@
         <activity android:name=".RedirectingActivitiy"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape">></activity>
+        <activity
+            android:name=".TotalsAbsences"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".MesStatistiques"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>
