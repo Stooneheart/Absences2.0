@@ -1,5 +1,6 @@
 package com.example.lucie.absences20;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,13 +40,6 @@ public class MainActivity extends AppCompatActivity {
         wrongPassword = (TextView) findViewById(R.id.textView2);
     }
 
-
-    public void onClick(View v) {
-        Intent intent1 = new Intent(this, AccueilActivity.class);
-        startActivity(intent1);
-    }
-
-
     public void login(View view) {
         username = (EditText) findViewById(R.id.editText3);
         password = (EditText) findViewById(R.id.editText4);
@@ -60,16 +55,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         intent.putExtra("token", response);
-                        startActivity(intent);
+                        if (!response.equals("0")) {
+                            startActivity(intent);
+                        } else {
+                            Context context = getApplicationContext();
+                            CharSequence text = "Erreur lors de la connexion ! Identifiant ou mot de passe incorrect";
+
+                            Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                            toast.show();
+                        }
                     }
 
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        wrongPassword.setText(message);
+                        Context context = getApplicationContext();
+                        CharSequence text = "Erreur lors de la connexion ! Veuillez recommencer";
 
+                        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 });
 
