@@ -43,15 +43,34 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         mListView = (ListView) findViewById(R.id.listView);
         Log.d(TAG, "OnCreate : started. ");
 
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Lucie");
-        names.add("Guillaume");
-        names.add("Alexis");
-        names.add("Clément");
-        names.add("Thomas");
-        names.add("Olivier");
+        InfosAbsences abs1 = new InfosAbsences("Ethique", "10/01/2017", "Florence", "DE SAINT ROMAN", "absent");
+        InfosAbsences abs2 = new InfosAbsences("Expression du besoin", "27/01/2017", "Frédéric", "HOUPERT", "absent");
+        InfosAbsences abs3 = new InfosAbsences("L'AMOA en mode projet", "31/01/2017", "Adelaïde", "GUIZE", "absent");
+        InfosAbsences abs4 = new InfosAbsences("Ingénieurie Système et Gestion de projet", "31/01/2017", "Thierry", "HALCONRUY", "absent");
+        InfosAbsences abs5 = new InfosAbsences("Ethique", "10/01/2017", "Florence", "DE SAINT ROMAN", "absent");
+        InfosAbsences abs6 = new InfosAbsences("Expression du besoin", "27/01/2017", "Frédéric", "HOUPERT", "absent");
+        InfosAbsences abs7 = new InfosAbsences("L'AMOA en mode projet", "31/01/2017", "Adelaïde", "GUIZE", "absent");
+        InfosAbsences abs8 = new InfosAbsences("Ingénieurie Système et Gestion de projet", "31/01/2017", "Thierry", "HALCONRUY", "absent");
+        InfosAbsences abs9 = new InfosAbsences("Ethique", "10/01/2017", "Florence", "DE SAINT ROMAN", "absent");
+        InfosAbsences abs10 = new InfosAbsences("Expression du besoin", "27/01/2017", "Frédéric", "HOUPERT", "absent");
+        InfosAbsences abs11 = new InfosAbsences("L'AMOA en mode projet", "31/01/2017", "Adelaïde", "GUIZE", "absent");
+        InfosAbsences abs12 = new InfosAbsences("Ingénieurie Système et Gestion de projet", "31/01/2017", "Thierry", "HALCONRUY", "absent");
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, names);
+        ArrayList<InfosAbsences> absences = new ArrayList<>();
+        absences.add(abs1);
+        absences.add(abs2);
+        absences.add(abs3);
+        absences.add(abs4);
+        absences.add(abs5);
+        absences.add(abs6);
+        absences.add(abs7);
+        absences.add(abs8);
+        absences.add(abs9);
+        absences.add(abs10);
+        absences.add(abs11);
+        absences.add(abs12);
+
+        AbsencesListeAdapter adapter = new AbsencesListeAdapter(this, R.layout.affichage_absences, absences);
         mListView.setAdapter(adapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
