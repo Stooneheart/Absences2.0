@@ -1,7 +1,9 @@
 package com.example.lucie.absences20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,6 +38,7 @@ public class AccueilActivity extends AppCompatActivity
     private TextView tvRepPrenomP;
     private TextView tvRepNomP;
     private TextView tvRepStatut;
+    private String userInfos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +52,15 @@ public class AccueilActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        String user = getIntent().getStringExtra("user");
+        userInfos = getIntent().getStringExtra("user");
         try {
-            JSONObject jsonObject = new JSONObject(user);
+            JSONObject jsonObject = new JSONObject(userInfos);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         TextView bienvenue = (TextView) findViewById(R.id.textBienvenue);
-        bienvenue.setText(bienvenue.getText() + " " + user);
+        bienvenue.setText(bienvenue.getText() + " " + userInfos);
     }
 
     @Override
@@ -72,6 +75,11 @@ public class AccueilActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.disconnect){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
 
         if(toggle.onOptionsItemSelected(item)) {
             return true;
@@ -99,7 +107,12 @@ public class AccueilActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, prevenirAbsenceFragment).commit();
 
+        } else if (id == R.id.deconnexion) {
+
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -168,6 +181,22 @@ public class AccueilActivity extends AppCompatActivity
 
         queue.add(jsObjRequest);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        JSONObject json = null;
+        String nomPrenom = "";
+        try {
+            json = new JSONObject(userInfos);
+            nomPrenom= json.getString("prenom") + " " + json.getString("nom").toUpperCase();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        getMenuInflater().inflate(R.menu.utilisateur_menu, menu);
+        MenuItem item =  menu.findItem(R.id.nomUser);
+        item.setTitle(nomPrenom);
+        return true;
     }
 
     public void OnClick2(View v){
