@@ -83,10 +83,16 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
             Intent intent3 = new Intent(this, MesStatistiques.class);
             intent3.putExtra("user", userInfos);
             startActivity(intent3);
-
         } else if (id == R.id.prevenir_absence) {
-            Intent intent4 = new Intent(this, AccueilActivity.class);
-            startActivity(intent4);
+            try{
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.deconnexion) {
 
