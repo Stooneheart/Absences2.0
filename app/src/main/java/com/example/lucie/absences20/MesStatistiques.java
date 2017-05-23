@@ -77,9 +77,11 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
 
         if (id == R.id.mes_absences) {
             Intent intent2 = new Intent(this, TotalsAbsences.class);
+            intent2.putExtra("user",userInfos);
             startActivity(intent2);
         } else if (id == R.id.mes_statistiques) {
-            Intent intent3 = new Intent(this, AccueilActivity.class);
+            Intent intent3 = new Intent(this, MesStatistiques.class);
+            intent3.putExtra("user", userInfos);
             startActivity(intent3);
 
         } else if (id == R.id.prevenir_absence) {

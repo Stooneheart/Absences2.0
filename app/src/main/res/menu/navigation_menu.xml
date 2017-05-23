@@ -15,6 +15,7 @@
                 android:icon="@mipmap/ic_trending_up_black_24dp"/>
             <item
                 android:id="@+id/prevenir_absence"
+                android:icon="@mipmap/ic_warning_black_24dp"
                 android:title="@string/Prevenir_absence" />
         </menu>
     </item>

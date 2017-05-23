@@ -6,7 +6,7 @@
     <string name="connexion">Connection</string>
     <string name="mes_absences">My absences</string>
     <string name="mes_statistiques">My stats</string>
-    <string name="se_deconnecter">|| Disconnect</string>
+    <string name="se_deconnecter">Disconnect</string>
     <string name="Prevenir_absence">Warn an absence</string>
     <string name="Autres">Others</string>
     <string name="Fonctions">Fonctions</string>

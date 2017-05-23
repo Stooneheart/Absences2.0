@@ -41,6 +41,7 @@ public class AccueilActivity extends AppCompatActivity
     private TextView tvRepPrenomP;
     private TextView tvRepNomP;
     private TextView tvRepStatut;
+    private String nomPrenom;
 
     private String userInfos;
     @Override
@@ -59,12 +60,13 @@ public class AccueilActivity extends AppCompatActivity
         userInfos = getIntent().getStringExtra("user");
         try {
             JSONObject jsonObject = new JSONObject(userInfos);
+            nomPrenom = jsonObject.get("prenom") + " " + jsonObject.getString("nom").toUpperCase();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         TextView bienvenue = (TextView) findViewById(R.id.textBienvenue);
-        bienvenue.setText(bienvenue.getText() + " " + userInfos);
+        bienvenue.setText(bienvenue.getText() + " " + nomPrenom);
     }
 
     @Override

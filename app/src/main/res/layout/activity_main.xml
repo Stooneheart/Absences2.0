@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#dddddd"
     tools:context="com.example.lucie.absences20.MainActivity"
     tools:layout_editor_absoluteY="89dp"
     tools:layout_editor_absoluteX="0dp">
