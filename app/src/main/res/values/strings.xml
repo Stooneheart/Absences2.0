@@ -23,13 +23,25 @@
     <string name="nom_prof">teacher surname</string>
     <string name="prenom_prof">teacher forename</string>
     <string name="statut">statut</string>
+    <string name="absences_promo">Absences par promotion</string>
     <string name="layout_stats">Layout stats</string>
     <string name="layout_prevenir_absence">Layout warn an absence</string>
     <string name="layout_absences">Layout absences</string>
-    <string name="bienvenue">Bienvenue :</string>
+    <string name="bienvenue">Welcome :</string>
     <string name="user">User</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="absences_anticipes">Absences anticipées</string>
+    <string name="absences_en_direct">Absences en DIRECT</string>
+    <string name="absences_professeurs">Absences des professeurs</string>
+    <string name="absences_eleves">Absences élèves</string>
+    <string name="alertes">Alertes</string>
+    <string name="statistiques_eleves">Statistiques élèves</string>
+    <string name="layout_alertes">Layout alertes</string>
+    <string name="layout_absences_par_promotion">Layout absences par promotion</string>
+    <string name="layout_absences_anticipees">Layout absences anticipées</string>
+    <string name="layout_absences_en_direct">Layout absences en direct</string>
+    <string name="layout_absences_professeurs">Layout Absences professeurs</string>
 
 </resources>

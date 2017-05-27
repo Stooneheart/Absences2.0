@@ -25,9 +25,12 @@
             android:name=".AccueilActivity"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".RedirectingActivitiy"
+        <activity
+            android:name=".RedirectingActivitiy"
             android:configChanges="orientation"
-            android:screenOrientation="sensorLandscape">></activity>
+            android:screenOrientation="sensorLandscape">
+            >
+        </activity>
         <activity
             android:name=".TotalsAbsences"
             android:configChanges="orientation"
@@ -36,6 +39,25 @@
             android:name=".MesStatistiques"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".PrevenirAbsence"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".AbsencesPromotion"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".AbsencesAnticipees"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".Alertes"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".AbsencesProfesseurs"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".AbsencesDirect"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape"></activity>
     </application>
 
 </manifest>

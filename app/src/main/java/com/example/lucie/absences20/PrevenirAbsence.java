@@ -1,77 +1,31 @@
 package com.example.lucie.absences20;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.support.v7.widget.Toolbar;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by lucie on 22/05/2017.
  */
 
-public class TotalsAbsences extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PrevenirAbsence extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
-    private static String TAG="TotalsAbsences";
-    private ListView mListView;
     private String userInfos;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.totals_absences);
-        mListView = (ListView) findViewById(R.id.listView);
-        Log.d(TAG, "OnCreate : started. ");
-
-        InfosAbsences abs1 = new InfosAbsences("Ethique", "10/01/2017", "Florence", "DE SAINT ROMAN", "absent");
-        InfosAbsences abs2 = new InfosAbsences("Expression du besoin", "27/01/2017", "Frédéric", "HOUPERT", "absent");
-        InfosAbsences abs3 = new InfosAbsences("L'AMOA en mode projet", "31/01/2017", "Adelaïde", "GUIZE", "absent");
-        InfosAbsences abs4 = new InfosAbsences("Ingénieurie Système et Gestion de projet", "31/01/2017", "Thierry", "HALCONRUY", "absent");
-        InfosAbsences abs5 = new InfosAbsences("Ethique", "10/01/2017", "Florence", "DE SAINT ROMAN", "absent");
-        InfosAbsences abs6 = new InfosAbsences("Expression du besoin", "27/01/2017", "Frédéric", "HOUPERT", "absent");
-        InfosAbsences abs7 = new InfosAbsences("L'AMOA en mode projet", "31/01/2017", "Adelaïde", "GUIZE", "absent");
-        InfosAbsences abs8 = new InfosAbsences("Ingénieurie Système et Gestion de projet", "31/01/2017", "Thierry", "HALCONRUY", "absent");
-        InfosAbsences abs9 = new InfosAbsences("Ethique", "10/01/2017", "Florence", "DE SAINT ROMAN", "absent");
-        InfosAbsences abs10 = new InfosAbsences("Expression du besoin", "27/01/2017", "Frédéric", "HOUPERT", "absent");
-        InfosAbsences abs11 = new InfosAbsences("L'AMOA en mode projet", "31/01/2017", "Adelaïde", "GUIZE", "absent");
-        InfosAbsences abs12 = new InfosAbsences("Ingénieurie Système et Gestion de projet", "31/01/2017", "Thierry", "HALCONRUY", "absent");
-
-        ArrayList<InfosAbsences> absences = new ArrayList<>();
-        absences.add(abs1);
-        absences.add(abs2);
-        absences.add(abs3);
-        absences.add(abs4);
-        absences.add(abs5);
-        absences.add(abs6);
-        absences.add(abs7);
-        absences.add(abs8);
-        absences.add(abs9);
-        absences.add(abs10);
-        absences.add(abs11);
-        absences.add(abs12);
-
-        AbsencesListeAdapter adapter = new AbsencesListeAdapter(this, R.layout.affichage_absences, absences);
-        mListView.setAdapter(adapter);
+        setContentView(R.layout.prevenir_absence);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
@@ -117,6 +71,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
+
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -156,7 +111,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
-            TotalsAbsences.this.finish();
+            PrevenirAbsence.this.finish();
             startActivity(intent);
         } else if (id == R.id.absences_anticipees) {
             try {
