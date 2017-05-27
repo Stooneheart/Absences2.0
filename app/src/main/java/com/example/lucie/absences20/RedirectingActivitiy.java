@@ -16,12 +16,13 @@ import org.json.JSONObject;
 
 public class RedirectingActivitiy extends AppCompatActivity {
 
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_redirecting);
 
-        String token = getIntent().getStringExtra("token");
+        token = getIntent().getStringExtra("token");
         token = token.substring(1,token.length()-1);
         String url = "http://absence2epf.net16.net/api/utilisateur.php?token="+token;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -35,6 +36,7 @@ public class RedirectingActivitiy extends AppCompatActivity {
                     String type = jsonObject.get("type").toString();
                     System.out.println("Ca marche " + type);
                     intent.putExtra("user", jsonObject.toString());
+                    intent.putExtra("token", token);
 
                     RedirectingActivitiy.this.finish();
                     startActivity(intent);

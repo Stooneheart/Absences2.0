@@ -36,11 +36,6 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
-        try {
-            JSONObject jsonObject = new JSONObject(userInfos);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

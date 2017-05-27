@@ -43,6 +43,7 @@ public class AccueilActivity extends AppCompatActivity
     private TextView tvRepStatut;
     private String nomPrenom;
     private int userType;
+    private String token;
 
     private String userInfos;
     @Override
@@ -56,6 +57,7 @@ public class AccueilActivity extends AppCompatActivity
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userInfos = getIntent().getStringExtra("user");
+        token = getIntent().getStringExtra("token");
         userType = 0;
         try {
             JSONObject jsonObject = new JSONObject(userInfos);
@@ -113,6 +115,7 @@ public class AccueilActivity extends AppCompatActivity
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent2 = new Intent(this, TotalsAbsences.class);
                 intent2.putExtra("user", jsonObject.toString());
+                intent2.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent2);
             } catch (JSONException e) {
