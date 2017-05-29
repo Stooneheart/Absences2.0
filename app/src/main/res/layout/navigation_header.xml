@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="@android:color/holo_blue_dark"
+    android:layout_height="50dp"
+    android:background="@color/colorMenu"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="5dp">
 
     <TextView
         android:id="@+id/textView5"
@@ -14,5 +17,5 @@
         android:shadowColor="@android:color/black"
         android:text="@string/menu"
         android:textColor="@android:color/white"
-        android:textSize="35sp" />
+        android:textSize="28sp" />
 </LinearLayout>

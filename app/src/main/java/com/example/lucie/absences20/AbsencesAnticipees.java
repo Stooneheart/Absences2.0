@@ -17,25 +17,38 @@ import org.json.JSONObject;
  * Created by lucie on 22/05/2017.
  */
 
-public class MesStatistiques extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AbsencesAnticipees extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
     private String userInfos;
+    private int userType;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mes_statistiques);
+        setContentView(R.layout.activity_absences_anticipees);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        userInfos = getIntent().getStringExtra("user");
+        userType = 0;
+        try {
+            JSONObject jsonObject = new JSONObject(userInfos);
+            userType = jsonObject.getInt("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (userType == 3) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.navigation_menu_scola);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
-        userInfos = getIntent().getStringExtra("user");
     }
 
     @Override
@@ -82,14 +95,20 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
             }
 
         } else if (id == R.id.mes_statistiques) {
-            Intent intent3 = new Intent(this, MesStatistiques.class);
-            intent3.putExtra("user", userInfos);
-            startActivity(intent3);
-        } else if (id == R.id.prevenir_absence) {
-            try{
+            try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AccueilActivity.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
+        } else if (id == R.id.prevenir_absence) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, PrevenirAbsence.class);
                 intent3.putExtra("user", jsonObject.toString());
                 this.finish();
                 this.startActivity(intent3);
@@ -100,7 +119,7 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
-            MesStatistiques.this.finish();
+            AbsencesAnticipees.this.finish();
             startActivity(intent);
         } else if (id == R.id.absences_anticipees) {
             try {

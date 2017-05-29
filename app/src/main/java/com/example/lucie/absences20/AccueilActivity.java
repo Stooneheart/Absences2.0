@@ -42,6 +42,8 @@ public class AccueilActivity extends AppCompatActivity
     private TextView tvRepNomP;
     private TextView tvRepStatut;
     private String nomPrenom;
+    private int userType;
+    private String token;
 
     private String userInfos;
     @Override
@@ -54,17 +56,24 @@ public class AccueilActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
+        token = getIntent().getStringExtra("token");
+        userType = 0;
         try {
             JSONObject jsonObject = new JSONObject(userInfos);
             nomPrenom = jsonObject.get("prenom") + " " + jsonObject.getString("nom").toUpperCase();
+            userType = jsonObject.getInt("type");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (userType == 3) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.navigation_menu_scola);
+        }
+
+        navigationView.setNavigationItemSelectedListener(this);
         TextView bienvenue = (TextView) findViewById(R.id.textBienvenue);
         bienvenue.setText(bienvenue.getText() + " " + nomPrenom);
     }
@@ -106,15 +115,13 @@ public class AccueilActivity extends AppCompatActivity
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent2 = new Intent(this, TotalsAbsences.class);
                 intent2.putExtra("user", jsonObject.toString());
+                intent2.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent2);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            //MesAbsencesFragment absencesFragment = new MesAbsencesFragment();
-            //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            //fragmentTransaction.replace(R.id.fragment_container, absencesFragment).commit();
         } else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -126,20 +133,77 @@ public class AccueilActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            //MesStatistiquesFragment statsFragment = new MesStatistiquesFragment();
-            //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            //fragmentTransaction.replace(R.id.fragment_container, statsFragment).commit();
-
         } else if (id == R.id.prevenir_absence) {
-            PrevenirAbsenceFragment prevenirAbsenceFragment = new PrevenirAbsenceFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, prevenirAbsenceFragment).commit();
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
             AccueilActivity.this.finish();
             startActivity(intent);
+        } else if (id == R.id.absences_anticipees) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (id == R.id.absences_direct) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (id == R.id.absence_profs) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, AbsencesProfesseurs.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (id == R.id.absences_promotion) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, AbsencesPromotion.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (id == R.id.alertes) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, Alertes.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
 

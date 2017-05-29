@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/Fonctions">
+        <menu>
+            <item
+                android:id="@+id/absences_promotion"
+                android:title="@string/absences_promo"
+                android:icon="@mipmap/ic_group_black_24dp"/>
+
+            <item
+                android:id="@+id/absence_profs"
+                android:title="@string/absences_professeurs"
+                android:icon="@mipmap/ic_clear_black_24dp"/>
+
+            <item
+                android:id="@+id/absences_direct"
+                android:icon="@mipmap/ic_pan_tool_black_24dp"
+                android:title="@string/absences_en_direct" />
+
+            <item
+                android:id="@+id/alertes"
+                android:icon="@mipmap/ic_notifications_black_24dp"
+                android:title="@string/alertes" />
+
+            <item
+                android:id="@+id/absences_anticipees"
+                android:icon="@mipmap/ic_contact_mail_black_24dp"
+                android:title="@string/absences_anticipes" />
+        </menu>
+    </item>
+    <item android:title="@string/Autres">
+        <menu>
+            <item
+                android:id="@+id/deconnexion"
+                android:title="@string/se_deconnecter"
+                android:icon="@mipmap/ic_exit_to_app_black_24dp"/>
+        </menu>
+    </item>
+</menu>
+

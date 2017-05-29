@@ -17,7 +17,7 @@ import org.json.JSONObject;
  * Created by lucie on 22/05/2017.
  */
 
-public class MesStatistiques extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PrevenirAbsence extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -25,7 +25,7 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mes_statistiques);
+        setContentView(R.layout.prevenir_absence);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
@@ -82,14 +82,20 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
             }
 
         } else if (id == R.id.mes_statistiques) {
-            Intent intent3 = new Intent(this, MesStatistiques.class);
-            intent3.putExtra("user", userInfos);
-            startActivity(intent3);
-        } else if (id == R.id.prevenir_absence) {
-            try{
+            try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AccueilActivity.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
+                intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
+        } else if (id == R.id.prevenir_absence) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, PrevenirAbsence.class);
                 intent3.putExtra("user", jsonObject.toString());
                 this.finish();
                 this.startActivity(intent3);
@@ -100,7 +106,7 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
-            MesStatistiques.this.finish();
+            PrevenirAbsence.this.finish();
             startActivity(intent);
         } else if (id == R.id.absences_anticipees) {
             try {
