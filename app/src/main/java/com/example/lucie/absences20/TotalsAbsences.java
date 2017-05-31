@@ -10,10 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by lucie on 22/05/2017.
@@ -44,6 +48,8 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
     private ListView mListView;
     private String userInfos;
     private String token;
+    private EditText theFilter;
+    private AbsencesListeAdapter adapter;
 
 
     @Override
@@ -52,6 +58,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.totals_absences);
         mListView = (ListView) findViewById(R.id.listView);
         token = getIntent().getStringExtra("token");
+        theFilter = (EditText) findViewById(R.id.searchFilter);
         Log.d(TAG, "OnCreate : started. ");
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -96,7 +103,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                 InfosAbsences absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
                                 infos.add(absence);
 
-                                AbsencesListeAdapter adapter = new AbsencesListeAdapter(getApplicationContext(), R.layout.affichage_absences, infos);
+                                adapter = new AbsencesListeAdapter(getApplicationContext(), R.layout.affichage_absences, infos);
                                 mListView.setAdapter(adapter);
                             } catch( JSONException e){
                                 e.printStackTrace();
@@ -122,7 +129,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                     infos.add(absence);
                                 }
 
-                                AbsencesListeAdapter adapter = new AbsencesListeAdapter(getApplicationContext(), R.layout.affichage_absences, infos);
+                                adapter = new AbsencesListeAdapter(getApplicationContext(), R.layout.affichage_absences, infos);
                                 mListView.setAdapter(adapter);
 
                             } catch (JSONException e) {
@@ -153,6 +160,25 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
+
+        theFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //(TotalsAbsences.this).adapter.getFilter().filter(s.toString());
+                String text = theFilter.getText().toString().toLowerCase(Locale.getDefault());
+                adapter.getFilter().filter(text);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     @Override

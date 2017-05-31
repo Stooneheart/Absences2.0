@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by lucie on 22/05/2017.
@@ -59,4 +60,6 @@ public class AbsencesListeAdapter extends ArrayAdapter<InfosAbsences> {
         return convertView;
 
     }
+
+
 }
