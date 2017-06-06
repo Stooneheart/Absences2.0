@@ -122,8 +122,9 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesDirect.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "direct");
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -144,8 +145,9 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
         } else if (id == R.id.absences_promotion) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesPromotion.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "promotions");
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {

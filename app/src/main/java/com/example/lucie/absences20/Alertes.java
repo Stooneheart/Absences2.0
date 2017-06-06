@@ -23,6 +23,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
     ActionBarDrawerToggle toggle;
     private String userInfos;
     private int userType;
+    private String token;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userInfos = getIntent().getStringExtra("user");
+        token = getIntent().getStringExtra("token");
         userType = 0;
         try {
             JSONObject jsonObject = new JSONObject(userInfos);
@@ -88,6 +90,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent2 = new Intent(this, TotalsAbsences.class);
                 intent2.putExtra("user", jsonObject.toString());
+                intent2.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent2);
             } catch (JSONException e) {
@@ -99,6 +102,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -110,6 +114,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, PrevenirAbsence.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -126,6 +131,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, AbsencesAnticipees.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -135,8 +141,10 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesDirect.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "direct");
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -148,6 +156,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, AbsencesProfesseurs.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -157,8 +166,10 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
         } else if (id == R.id.absences_promotion) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesPromotion.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "promotions");
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -170,6 +181,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, Alertes.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {

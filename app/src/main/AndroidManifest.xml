@@ -43,21 +43,31 @@
             android:name=".PrevenirAbsence"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".AbsencesPromotion"
+        <activity
+            android:name=".AbsencesPromotion"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".AbsencesAnticipees"
+        <activity
+            android:name=".AbsencesAnticipees"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".Alertes"
+        <activity
+            android:name=".Alertes"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".AbsencesProfesseurs"
+        <activity
+            android:name=".AbsencesProfesseurs"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".AbsencesDirect"
+        <activity
+            android:name=".AbsencesDirect"
             android:configChanges="orientation"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".choix_promotion"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape">
+        </activity>
+
     </application>
 
 </manifest>

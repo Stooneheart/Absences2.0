@@ -17,9 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class MainActivity extends AppCompatActivity {
 
     EditText username;
@@ -37,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Resources res = getResources();
         message = String.format(res.getString(R.string.WPassword));
-        wrongPassword = (TextView) findViewById(R.id.textView2);
+        wrongPassword = (TextView) findViewById(R.id.textViewDirect);
     }
 
     public void login(View view) {

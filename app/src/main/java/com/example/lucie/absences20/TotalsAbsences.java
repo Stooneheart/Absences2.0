@@ -265,7 +265,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesDirect.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
                 this.finish();
                 this.startActivity(intent3);
@@ -287,7 +287,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_promotion) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesPromotion.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
                 this.finish();
                 this.startActivity(intent3);
