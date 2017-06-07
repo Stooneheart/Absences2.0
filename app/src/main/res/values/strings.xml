@@ -39,9 +39,14 @@
     <string name="alertes">Alertes</string>
     <string name="statistiques_eleves">Statistiques élèves</string>
     <string name="layout_alertes">Layout alertes</string>
-    <string name="layout_absences_par_promotion">Layout absences par promotion</string>
+    <string name="layout_absences_par_promotion">Affichage absences promotion :</string>
     <string name="layout_absences_anticipees">Layout absences anticipées</string>
-    <string name="layout_absences_en_direct">Layout absences en direct</string>
+    <string name="layout_absences_en_direct">Affichage absences en direct promotion :</string>
     <string name="layout_absences_professeurs">Layout Absences professeurs</string>
+    <string name="layout_choix_promotion">Choisissez la promotion à afficher :</string>
+    <string name="voir_les_absences">Voir les absences</string>
+
+    <string-array name="promos">
+    </string-array>
 
 </resources>

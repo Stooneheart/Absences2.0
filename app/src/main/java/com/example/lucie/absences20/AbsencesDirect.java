@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,17 +24,24 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
     ActionBarDrawerToggle toggle;
     private String userInfos;
     private int userType;
+    private String promo;
+    private String token;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absences_direct);
 
+        TextView textView = (TextView) findViewById(R.id.textViewDirect);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userInfos = getIntent().getStringExtra("user");
+        promo = getIntent().getStringExtra("promo");
+        token = getIntent().getStringExtra("token");
+        textView.setText(textView.getText() + " " + promo);
+
         userType = 0;
         try {
             JSONObject jsonObject = new JSONObject(userInfos);
@@ -88,6 +96,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent2 = new Intent(this, TotalsAbsences.class);
                 intent2.putExtra("user", jsonObject.toString());
+                intent2.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent2);
             } catch (JSONException e) {
@@ -99,6 +108,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -110,6 +120,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, PrevenirAbsence.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -126,6 +137,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, AbsencesAnticipees.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -135,8 +147,10 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesDirect.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
+                intent3.putExtra("affichage", "direct");
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -148,6 +162,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, AbsencesProfesseurs.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -157,8 +172,10 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_promotion) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesPromotion.class);
+                Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "promotions");
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -170,6 +187,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, Alertes.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {

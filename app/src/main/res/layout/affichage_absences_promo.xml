@@ -11,44 +11,62 @@
         android:id="@+id/tvmodule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="17"
+        android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="20"
+        android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvpreprof"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="21"
+        android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvnomprof"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="21"
+        android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvpreeleve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="14"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvnomeleve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="15"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvstatut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="21"
+        android:layout_weight="15"
         android:text=""
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 </LinearLayout>
