@@ -55,7 +55,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         Log.d(TAG, "OnCreate : started. ");
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://absence2epf.net16.net/api/absences.php?token=" + token;
+        String url ="http://10.0.2.2/api/absences.php?token=" + token;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -289,6 +289,19 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (id == R.id.stats_promotion) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, choix_promotion.class);
+                intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "promotions");
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {

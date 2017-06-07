@@ -80,6 +80,9 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
         if (userType == 3) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.navigation_menu_scola);
+        } else if (userType == 4) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.navigation_menu_respos);
         }
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -220,6 +223,19 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
                 e.printStackTrace();
             }
 
+        } else if (id == R.id.stats_promotion) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, choix_promotion.class);
+                intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "stats");
+                intent3.putExtra("token", token);
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         } else if (id == R.id.alertes) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -288,13 +304,28 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        } else if (choixAffichage.equals("stats")) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(userInfos);
+                Intent intent = new Intent(this, StatsPromotion.class);
+                intent.putExtra("promo", promo);
+                intent.putExtra("user", jsonObject.toString());
+                intent.putExtra("token", token);
+                intent.putExtra("promos", promos);
+                intent.putExtra("idPromos", idPromos);
+                this.finish();
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
     public void Requete(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://absence2epf.net16.net/api/promotions.php?token=" + token;
+        String url ="http://10.0.2.2/api/promotions.php?token=" + token;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {

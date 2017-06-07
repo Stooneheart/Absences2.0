@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         String usname = username.getText().toString();
         String pword = password.getText().toString();
         queue1 = Volley.newRequestQueue(this);
-        String url = "http://absence2epf.net16.net/api/token.php?identifiant=" + usname + "&pw=" + pword;
+        String url = "http://10.0.2.2/api/token.php?identifiant=" + usname + "&pw=" + pword;
         intent = new Intent(this, RedirectingActivitiy.class);
 
         StringRequest jsObjRequest = new StringRequest

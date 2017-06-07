@@ -13,26 +13,6 @@
                 android:id="@+id/stats_promotion"
                 android:title="@string/statistiques_par_promotion"
                 android:icon="@mipmap/ic_equalizer_black_24dp"/>
-
-            <item
-                android:id="@+id/absence_profs"
-                android:title="@string/absences_professeurs"
-                android:icon="@mipmap/ic_clear_black_24dp"/>
-
-            <item
-                android:id="@+id/absences_direct"
-                android:icon="@mipmap/ic_pan_tool_black_24dp"
-                android:title="@string/absences_en_direct" />
-
-            <item
-                android:id="@+id/alertes"
-                android:icon="@mipmap/ic_notifications_black_24dp"
-                android:title="@string/alertes" />
-
-            <item
-                android:id="@+id/absences_anticipees"
-                android:icon="@mipmap/ic_contact_mail_black_24dp"
-                android:title="@string/absences_anticipes" />
         </menu>
     </item>
     <item android:title="@string/Autres">

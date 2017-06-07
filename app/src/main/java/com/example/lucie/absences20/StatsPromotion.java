@@ -13,10 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +35,7 @@ import java.util.List;
  * Created by lucie on 22/05/2017.
  */
 
-public class AbsencesPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class StatsPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -53,7 +51,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_absences_promotion);
+        setContentView(R.layout.activity_stats_promotion);
         spinner = (Spinner) findViewById(R.id.spinner2);
 
         mListView = (ListView) findViewById(R.id.listViewPromo);
@@ -172,7 +170,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
-            AbsencesPromotion.this.finish();
+            StatsPromotion.this.finish();
             startActivity(intent);
         } else if (id == R.id.absences_anticipees) {
             try {

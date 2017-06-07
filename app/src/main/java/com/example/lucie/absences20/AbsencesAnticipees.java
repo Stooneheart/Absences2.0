@@ -50,6 +50,9 @@ public class AbsencesAnticipees extends AppCompatActivity implements NavigationV
         if (userType == 3) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.navigation_menu_scola);
+        } else if (userType == 4) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.navigation_menu_respos);
         }
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -171,6 +174,19 @@ public class AbsencesAnticipees extends AppCompatActivity implements NavigationV
                 Intent intent3 = new Intent(this, choix_promotion.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("affichage", "promotions");
+                intent3.putExtra("token", token);
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else if (id == R.id.stats_promotion) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, choix_promotion.class);
+                intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("affichage", "stats");
                 intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
