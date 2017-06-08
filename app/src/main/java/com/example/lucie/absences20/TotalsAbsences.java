@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -48,7 +49,9 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
     private ListView mListView;
     private String userInfos;
     private String token;
-    private EditText theFilter;
+    private SearchView theFilter;
+    private ArrayList<InfosAbsences> infos;
+    private InfosAbsences absence;
     private AbsencesListeAdapter adapter;
 
 
@@ -58,7 +61,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.totals_absences);
         mListView = (ListView) findViewById(R.id.listView);
         token = getIntent().getStringExtra("token");
-        theFilter = (EditText) findViewById(R.id.searchFilter);
+        theFilter = (SearchView) findViewById(R.id.searchFilter);
         Log.d(TAG, "OnCreate : started. ");
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -84,7 +87,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                             e.printStackTrace();
                         }
 
-                        ArrayList<InfosAbsences> infos = new ArrayList<>();
+                        infos = new ArrayList<>();
 
                         if(mJsonArray.length() == 0){
                             try {
@@ -100,7 +103,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                 String prenomP = jsonPrenomP.toString();
                                 Object jsonStatut = mJsonInfos.get("statut");
                                 String statut = jsonStatut.toString();
-                                InfosAbsences absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
+                                absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
                                 infos.add(absence);
 
                                 adapter = new AbsencesListeAdapter(getApplicationContext(), R.layout.affichage_absences, infos);
@@ -125,7 +128,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                     String prenomP = jsonPrenomP.toString();
                                     Object jsonStatut = mJsonArray.getJSONObject(i).get("statut");
                                     String statut = jsonStatut.toString();
-                                    InfosAbsences absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
+                                    absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
                                     infos.add(absence);
                                 }
 
@@ -161,21 +164,17 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
 
-        theFilter.addTextChangedListener(new TextWatcher() {
+        theFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //(TotalsAbsences.this).adapter.getFilter().filter(s.toString());
-                String text = theFilter.getText().toString().toLowerCase(Locale.getDefault());
-                adapter.getFilter().filter(text);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
             }
         });
 
