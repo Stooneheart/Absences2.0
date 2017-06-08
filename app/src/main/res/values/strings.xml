@@ -45,6 +45,7 @@
     <string name="layout_absences_professeurs">Layout Absences professeurs</string>
     <string name="layout_choix_promotion">Choisissez la promotion à afficher :</string>
     <string name="voir_les_absences">Voir les absences</string>
+    <string name="statistiques_par_promotion">Statistiques par promotion</string>
 
     <string-array name="promos">
     </string-array>

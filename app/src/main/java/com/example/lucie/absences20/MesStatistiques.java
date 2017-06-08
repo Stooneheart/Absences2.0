@@ -148,7 +148,7 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.alertes) {
+        }  else if (id == R.id.alertes) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, Alertes.class);
