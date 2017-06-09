@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Resources res = getResources();
         message = String.format(res.getString(R.string.WPassword));
-        wrongPassword = (TextView) findViewById(R.id.textViewDirect);
+        wrongPassword = (TextView) findViewById(R.id.tvStatsEleve);
     }
 
     public void login(View view) {

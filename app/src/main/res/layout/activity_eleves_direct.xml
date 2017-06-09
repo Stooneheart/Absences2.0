@@ -16,48 +16,26 @@
         android:layout_height="match_parent"
         tools:context=".AbsencesPromotion">
 
+        <ListView
+            android:id="@+id/listViewElevesDirect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false" />
+
         <Spinner
             android:id="@+id/spinner2"
             style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="138dp"
+            android:layout_width="410dp"
             android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/border"
             android:entries="@array/promos"
-            android:textAlignment="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
-            android:layout_width="1150dp"
-            android:layout_height="530dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginStart="65dp"
-            android:layout_marginTop="100dp" />
-
-        <Button
-            android:id="@+id/buttonGoList"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:onClick="onClick"
-            android:text="@string/afficher_la_liste_d_absences_correspondante"
-            android:textSize="18sp"
-            android:layout_alignTop="@+id/spinner2"
-            android:layout_alignLeft="@+id/graph"
-            android:layout_alignStart="@+id/graph" />
-
-        <Button
-            android:id="@+id/buttonClassement"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:onClick="onClick"
-            android:text="@string/classement_absences"
-            android:textSize="18sp"
-            android:layout_alignTop="@+id/spinner2"
-            android:layout_alignRight="@+id/graph"
-            android:layout_alignEnd="@+id/graph" />
+            android:textAlignment="center" />
 
     </RelativeLayout>
 

@@ -9,38 +9,66 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lucie on 22/05/2017.
  */
 
-public class AbsencesDirect extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AbsencesDirect extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
     private String userInfos;
     private int userType;
-    private String promo;
     private String token;
+    private Spinner spinner;
+    private String[] lesNomCours;
+    private String[] lesIdCours;
+    private String coursAVisu;
+    private String idCoursAVisu;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absences_direct);
 
-        TextView textView = (TextView) findViewById(R.id.textViewDirect);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userInfos = getIntent().getStringExtra("user");
-        promo = getIntent().getStringExtra("promo");
         token = getIntent().getStringExtra("token");
-        textView.setText(textView.getText() + " " + promo);
+
+        Button button = (Button) findViewById(R.id.buttonEleves);
+
+        button.setOnClickListener(this);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+
+        userInfos = getIntent().getStringExtra("user");
+        token = getIntent().getStringExtra("token");
+
+        Requete();
 
         userType = 0;
         try {
@@ -150,7 +178,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, choix_promotion.class);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 intent3.putExtra("affichage", "direct");
@@ -234,4 +262,115 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    public void Requete(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://10.0.2.2/api/cours_direct.php?token=" + token;
+
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("Réussiréussi");
+                        JSONObject mJsonInfos = new JSONObject();
+                        JSONArray mJsonArray = new JSONArray();
+                        try {
+                            mJsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        ArrayList<String> nomDesCours = new ArrayList<>();
+                        ArrayList<String> idDesCours = new ArrayList<>();
+
+                        if(mJsonArray.length() == 0){
+                            try {
+                                Object jsonCours = mJsonInfos.get("nom_matiere");
+                                String nomCours = jsonCours.toString();
+                                Object jsonIdCours = mJsonInfos.get("id_cours");
+                                String idCours = jsonIdCours.toString();
+                                nomDesCours.add(nomCours);
+                                idDesCours.add(idCours);
+
+                                lesNomCours = nomDesCours.toArray(new String [nomDesCours.size()]);
+                                lesIdCours = idDesCours.toArray(new String [idDesCours.size()]);
+                                FillSpinner(nomDesCours);
+                            } catch( JSONException e){
+                                e.printStackTrace();
+                            }
+                        } else {
+
+                            try {
+
+                                for (int i = 0; i < mJsonArray.length(); i++) {
+                                    Object jsonCours = mJsonArray.getJSONObject(i).get("nom_matiere");
+                                    String nomCours = jsonCours.toString();
+                                    Object jsonIdCours = mJsonArray.getJSONObject(i).get("id_cours");
+                                    String idCours = jsonIdCours.toString();
+                                    nomDesCours.add(nomCours);
+                                    idDesCours.add(idCours);
+                                }
+                                lesNomCours = nomDesCours.toArray(new String [nomDesCours.size()]);
+                                lesIdCours = idDesCours.toArray(new String [idDesCours.size()]);
+                                FillSpinner(nomDesCours);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        System.out.println(error.toString());
+                        System.out.println("RatéRaté");
+                    }
+                });
+
+
+        queue.add(jsObjRequest);
+
+    }
+
+    public void FillSpinner(List<String> proms){
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, proms);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        coursAVisu = parent.getItemAtPosition(position).toString();
+        idCoursAVisu = lesIdCours[position];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, AbsencesElevesDirect.class);
+        intent.putExtra("cours", coursAVisu);
+        intent.putExtra("idCours", idCoursAVisu);
+        intent.putExtra("lesCours", lesNomCours);
+        intent.putExtra("lesIdCours", lesIdCours);
+        intent.putExtra("user", userInfos);
+        intent.putExtra("token", token);
+        startActivity(intent);
+    }
 }

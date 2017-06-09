@@ -188,7 +188,7 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, choix_promotion.class);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("affichage", "direct");
                 intent3.putExtra("token", token);
@@ -289,21 +289,6 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else if (choixAffichage.equals("direct")) {
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = new JSONObject(userInfos);
-                Intent intent = new Intent(this, AbsencesDirect.class);
-                intent.putExtra("promo", promo);
-                intent.putExtra("user", jsonObject.toString());
-                intent.putExtra("token", token);
-                intent.putExtra("promos", promos);
-                intent.putExtra("idPromos", idPromos);
-                this.finish();
-                startActivity(intent);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         } else if (choixAffichage.equals("stats")) {
             JSONObject jsonObject = null;
             try {
@@ -340,11 +325,14 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        try {
 
-                            mJsonInfos = new JSONObject(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         ArrayList<String> proms = new ArrayList<>();
@@ -359,8 +347,9 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
                                 proms.add(promo);
                                 idProms.add(idPromo);
 
-                                promos = (String[]) proms.toArray();
-                                idPromos = (String[]) idProms.toArray();
+                                promos = proms.toArray(new String [proms.size()]);
+                                idPromos = idProms.toArray(new String [idProms.size()]);
+                                FillSpinner(proms);
                             } catch( JSONException e){
                                 e.printStackTrace();
                             }

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by lucie on 22/05/2017.
  */
 
-public class AbsencesPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class AbsencesPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -59,6 +60,8 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         mListView = (ListView) findViewById(R.id.listViewPromo);
         promos = getIntent().getStringArrayExtra("promos");
         idPromos = getIntent().getStringArrayExtra("idPromos");
+        Button button = (Button) findViewById(R.id.buttonGoStats);
+        button.setOnClickListener(this);
 
         List<String> list = Arrays.asList(promos);
         FillSpinner(list);
@@ -189,7 +192,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, choix_promotion.class);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("affichage", "direct");
                 intent3.putExtra("token", token);
@@ -291,11 +294,14 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        try {
 
-                            mJsonInfos = new JSONObject(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         ArrayList<InfosAbsencesPromotion> infos = new ArrayList<>();
@@ -398,5 +404,17 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, StatsPromotion.class);
+        intent.putExtra("token", token);
+        intent.putExtra("promos", promos);
+        intent.putExtra("idPromos", idPromos);
+        intent.putExtra("promo", promo);
+        intent.putExtra("user", userInfos);
+        this.finish();
+        startActivity(intent);
     }
 }

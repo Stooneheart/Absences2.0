@@ -163,7 +163,7 @@ public class AccueilActivity extends AppCompatActivity
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, choix_promotion.class);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("affichage", "direct");
                 intent3.putExtra("token", token);

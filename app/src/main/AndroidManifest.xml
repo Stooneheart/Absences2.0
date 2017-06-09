@@ -67,6 +67,14 @@
             android:name=".StatsPromotion"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".AbsencesElevesDirect"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".StatsClassementPromotion"
+            android:configChanges="orientation"
+            android:screenOrientation="sensorLandscape" />
         <activity android:name=".choix_promotion"
             android:configChanges="orientation"
             android:screenOrientation="sensorLandscape">

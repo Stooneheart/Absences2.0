@@ -41,11 +41,23 @@
     <string name="layout_alertes">Layout alertes</string>
     <string name="layout_absences_par_promotion">Affichage absences promotion :</string>
     <string name="layout_absences_anticipees">Layout absences anticipées</string>
-    <string name="layout_absences_en_direct">Affichage absences en direct promotion :</string>
+    <string name="layout_absences_en_direct">Choisissez le cours à afficher en direct :</string>
     <string name="layout_absences_professeurs">Layout Absences professeurs</string>
     <string name="layout_choix_promotion">Choisissez la promotion à afficher :</string>
     <string name="voir_les_absences">Voir les absences</string>
     <string name="statistiques_par_promotion">Statistiques par promotion</string>
+    <string name="classement_absences">Afficher le classement d\'absences des élèves</string>
+    <string name="afficher_graphique_promotion">Afficher le graphique d\'absences de la promotion</string>
+    <string name="voir_les_absences_en_direct">Voir les absences en direct du cours selectionné</string>
+    <string name="afficher_mes_statistiques">Afficher mes statistiques</string>
+    <string name="afficher_ma_liste_d_absences">Afficher ma liste d\'absences</string>
+    <string name="afficher_les_statistiques_correspondantes">Afficher les statistiques correspondantes</string>
+    <string name="afficher_la_liste_d_absences_correspondante">Afficher la liste d\'absences correspondante</string>
+    <string name="date">Date</string>
+    <string name="module">Module</string>
+    <string name="nom_l_ve">Nom élève</string>
+    <string name="pr_nom_prof">Prénom Prof</string>
+    <string name="pr_nom_l_ve">Prénom élève</string>
 
     <string-array name="promos">
     </string-array>

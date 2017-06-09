@@ -1,6 +1,8 @@
 package com.example.lucie.absences20;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -22,6 +25,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +44,7 @@ import java.util.List;
  * Created by lucie on 22/05/2017.
  */
 
-public class StatsPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class StatsPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -48,11 +57,15 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
     private String [] promos;
     private String [] idPromos;
     private Spinner spinner;
+    private String promoName;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_promotion);
         spinner = (Spinner) findViewById(R.id.spinner2);
+
+        Button button = (Button) findViewById(R.id.buttonClassement);
+        button.setOnClickListener(this);
 
         mListView = (ListView) findViewById(R.id.listViewPromo);
         promos = getIntent().getStringArrayExtra("promos");
@@ -69,10 +82,11 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
         Log.d(TAG, "OnCreate : started. ");
 
         spinner.setSelection(Integer.valueOf(idSelection));
+        promoName = promos[Integer.valueOf(idSelection)];
 
         String id = idPromos[Integer.valueOf(idSelection)];
 
-        AfficherAbsencePromo(id);
+        StatsRequete(id);
 
         userType = 0;
         try {
@@ -187,7 +201,7 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, choix_promotion.class);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("affichage", "direct");
                 intent3.putExtra("token", token);
@@ -271,117 +285,42 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-    public void AfficherAbsencePromo (String id){
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/absences_promotion.php?id=" + id + "&token=" + token;
-
-        StringRequest jsObjRequest = new StringRequest
-                (Request.Method.GET, url, new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("Réussiréussi");
-                        JSONObject mJsonInfos = new JSONObject();
-                        JSONArray mJsonArray = new JSONArray();
-                        try {
-                            mJsonArray = new JSONArray(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-
-                            mJsonInfos = new JSONObject(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        ArrayList<InfosAbsencesPromotion> infos = new ArrayList<>();
-
-                        if(mJsonArray.length() == 0){
-                            try {
-                                Object jsonCours = mJsonInfos.get("matiere");
-                                String cours = jsonCours.toString();
-                                Object jsonHeureD = mJsonInfos.get("heure_debut");
-                                String heureD = jsonHeureD.toString();
-//                                Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
-//                                String heureF = jsonHeureF.toString();
-                                Object jsonNomP = mJsonInfos.get("nom_professeur");
-                                String nomP = jsonNomP.toString();
-                                Object jsonPrenomP = mJsonInfos.get("prenom_professeur");
-                                String prenomP = jsonPrenomP.toString();
-                                Object jsonPrenomE = mJsonInfos.get("prenom_eleve");
-                                String prenomE = jsonPrenomE.toString();
-                                Object jsonNomE = mJsonInfos.get("nom_eleve");
-                                String nomE = jsonNomE.toString();
-                                Object jsonStatut = mJsonInfos.get("statut");
-                                String statut = jsonStatut.toString();
-                                InfosAbsencesPromotion absence = new InfosAbsencesPromotion(cours, heureD, prenomP, nomP, prenomE, nomE, statut);
-                                infos.add(absence);
-
-                                AbsencesPromoListeAdapter adapter = new AbsencesPromoListeAdapter(getApplicationContext(), R.layout.affichage_absences_promo, infos);
-                                mListView.setAdapter(adapter);
-                            } catch( JSONException e){
-                                e.printStackTrace();
-                            }
-                        } else {
-
-                            try {
-
-                                for (int i = 0; i < mJsonArray.length(); i++) {
-                                    Object jsonCours = mJsonArray.getJSONObject(i).get("matiere");
-                                    String cours = jsonCours.toString();
-                                    Object jsonHeureD = mJsonArray.getJSONObject(i).get("heure_debut");
-                                    String heureD = jsonHeureD.toString();
-//                                    Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
-//                                    String heureF = jsonHeureF.toString();
-                                    Object jsonNomP = mJsonArray.getJSONObject(i).get("nom_professeur");
-                                    String nomP = jsonNomP.toString();
-                                    Object jsonPrenomP = mJsonArray.getJSONObject(i).get("prenom_professeur");
-                                    String prenomP = jsonPrenomP.toString();
-                                    Object jsonPrenomE = mJsonArray.getJSONObject(i).get("prenom_eleve");
-                                    String prenomE = jsonPrenomE.toString();
-                                    Object jsonNomE = mJsonArray.getJSONObject(i).get("nom_eleve");
-                                    String nomE = jsonNomE.toString();
-                                    Object jsonStatut = mJsonArray.getJSONObject(i).get("statut");
-                                    String statut = jsonStatut.toString();
-
-                                    InfosAbsencesPromotion absence = new InfosAbsencesPromotion(cours, heureD, prenomP, nomP, prenomE, nomE, statut);
-                                    infos.add(absence);
-                                }
-
-
-
-                                AbsencesPromoListeAdapter adapter = new AbsencesPromoListeAdapter(getApplicationContext(), R.layout.affichage_absences_promo, infos);
-                                mListView.setAdapter(adapter);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        System.out.println(error.toString());
-                        System.out.println("RatéRaté");
-                    }
-                });
-
-
-        queue.add(jsObjRequest);
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.buttonClassement :
+                Intent intent = new Intent(this, StatsClassementPromotion.class);
+                intent.putExtra("token", token);
+                intent.putExtra("promos", promos);
+                intent.putExtra("idPromos", idPromos);
+                intent.putExtra("promo", promo);
+                intent.putExtra("user", userInfos);
+                this.finish();
+                startActivity(intent);
+                break;
+            case R.id.buttonGoList :
+                Intent intent2 = new Intent(this, AbsencesPromotion.class);
+                intent2.putExtra("token", token);
+                intent2.putExtra("promos", promos);
+                intent2.putExtra("idPromos", idPromos);
+                intent2.putExtra("promo", promo);
+                intent2.putExtra("user", userInfos);
+                this.finish();
+                startActivity(intent2);
+                break;
+        }
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         promo = parent.getItemAtPosition(position).toString();
         String idSelection = String.valueOf(Arrays.asList(promos).indexOf(promo));
-        String idPromo = idPromos[Integer.valueOf(idSelection)];
+        String idProm = idPromos[Integer.valueOf(idSelection)];
 
-        AfficherAbsencePromo(idPromo);
+        promoName = promos[Integer.valueOf(idSelection)];
+        StatsRequete(idProm);
     }
 
     @Override
@@ -396,5 +335,118 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    public void StatsRequete (String id){
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://10.0.2.2/api/matieres.php?token=" + token + "&id=" + id;
+
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("Réussiréussi");
+                        JSONObject mJsonInfos = new JSONObject();
+                        JSONArray mJsonArray = new JSONArray();
+                        try {
+                            mJsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        ArrayList<InfosStatsPromo> infos = new ArrayList<>();
+
+                        if(mJsonArray.length() == 0){
+                            try {
+                                Object jsonNbr = mJsonInfos.get("nbr");
+                                String nbr = jsonNbr.toString();
+                                Object jsonNom = mJsonInfos.get("nom");
+                                String nom = jsonNom.toString();
+                                InfosStatsPromo stat = new InfosStatsPromo(nbr, nom);
+                                infos.add(stat);
+                            } catch( JSONException e){
+                                e.printStackTrace();
+                            }
+                        } else {
+
+                            try {
+
+                                for (int i = 0; i < mJsonArray.length(); i++) {
+                                    Object jsonNbr = mJsonArray.getJSONObject(i).get("nbr");
+                                    String nbr = jsonNbr.toString();
+                                    Object jsonNom = mJsonArray.getJSONObject(i).get("nom");
+                                    String nom = jsonNom.toString();
+                                    InfosStatsPromo stat = new InfosStatsPromo(nbr, nom);
+                                    infos.add(stat);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        DataPoint[] datas = new DataPoint[infos.size()+2];
+                        String[] datasName = new String[infos.size()+2];
+                        datas[0] = new DataPoint(0, 0);
+                        datasName[0] = "";
+                        for (InfosStatsPromo info : infos){
+                            datas[infos.indexOf(info)+1] = new DataPoint(infos.indexOf(info)+1,Integer.valueOf(info.getNbr()));
+                            datasName[infos.indexOf(info)+1] = info.getNom();
+                        }
+
+                        datas[infos.size()+1] = new DataPoint(infos.size()+1,0);
+                        datasName[infos.size()+1] = "";
+
+                        GraphView graph = (GraphView) findViewById(R.id.graph);
+                        graph.removeAllSeries();
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(datas);
+                        graph.addSeries(series);
+
+// styling
+                        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                            @Override
+                            public int get(DataPoint data) {
+                                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+                            }
+                        });
+
+                        series.setSpacing(20);
+
+// draw values on top
+                      //  series.setDrawValuesOnTop(true);
+                      //  series.setValuesOnTopColor(Color.BLACK);
+                      //  series.setValuesOnTopSize(40);
+
+                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+                        staticLabelsFormatter.setHorizontalLabels(datasName);
+                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+                        graph.setTitle("Répartition des absences de la promotion " + promoName + " par matière");
+                        graph.setTitleTextSize(50);
+                        graph.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'absences");
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        System.out.println(error.toString());
+                        System.out.println("RatéRaté");
+                    }
+                });
+
+
+        queue.add(jsObjRequest);
     }
 }

@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/login"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDirect" />
+        app:layout_constraintBottom_toTopOf="@+id/tvStatsEleve" />
 
     <EditText
         android:id="@+id/editText3"
@@ -93,7 +93,7 @@
         android:layout_marginBottom="8dp" />
 
     <TextView
-        android:id="@+id/textViewDirect"
+        android:id="@+id/tvStatsEleve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
