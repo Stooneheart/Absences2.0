@@ -36,9 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:text="Module"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,40 +48,54 @@
             android:layout_gravity="end"
             android:layout_weight="1"
             android:elevation="24dp"
-            android:paddingLeft="20dp"
             android:text="Date"
-            android:textAlignment="textStart" />
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginLeft="50dp"
             android:layout_weight=".2"
+            android:paddingEnd="20dp"
+            android:paddingStart="-20dp"
             android:text="Prénom Professeur"
-            android:textAlignment="textStart" />
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_weight=".7"
+            android:paddingEnd="-20dp"
             android:text="Nom Professeur"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".9"
+            android:layout_marginLeft="20dp"
+            android:layout_weight=".7"
+            android:paddingEnd="-30dp"
             android:text="Statut"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topNoms" />
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/topNoms" />
     </RelativeLayout>
 
 

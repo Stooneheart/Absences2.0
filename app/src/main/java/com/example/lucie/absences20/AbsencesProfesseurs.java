@@ -9,9 +9,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by lucie on 22/05/2017.
@@ -24,10 +36,15 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
     private String userInfos;
     private int userType;
     private String token;
+    private ListView mListView;
+    private ArrayList<InfosAbsencesProf> infos;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absences_professeurs);
+
+        mListView = (ListView) findViewById(R.id.listViewProf);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
@@ -48,6 +65,7 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
         if (userType == 3) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.navigation_menu_scola);
+            //AfficherAbsenceProf();
         } else if (userType == 4) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.navigation_menu_respos);
@@ -212,6 +230,8 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
         return true;
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         JSONObject json = null;
@@ -226,6 +246,101 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
         MenuItem item =  menu.findItem(R.id.nomUser);
         item.setTitle(nomPrenom);
         return true;
+    }
+
+    public void AfficherAbsenceProf (String id){
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://10.0.2.2/api/absences_promotion.php?id=" + id + "&token=" + token;
+
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("Réussiréussi");
+                        JSONObject mJsonInfos = new JSONObject();
+                        JSONArray mJsonArray = new JSONArray();
+                        try {
+                            mJsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+
+                            mJsonInfos = new JSONObject(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        infos = new ArrayList<>();
+
+                        if(mJsonArray.length() == 0){
+                            try {
+                                Object jsonCours = mJsonInfos.get("matiere");
+                                String cours = jsonCours.toString();
+                                Object jsonHeureD = mJsonInfos.get("heure_debut");
+                                String heureD = jsonHeureD.toString();
+//                                Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
+//                                String heureF = jsonHeureF.toString();
+                                Object jsonNomP = mJsonInfos.get("nom_professeur");
+                                String nomP = jsonNomP.toString();
+                                Object jsonPrenomP = mJsonInfos.get("prenom_professeur");
+                                String prenomP = jsonPrenomP.toString();
+                                Object jsonStatut = mJsonInfos.get("statut");
+                                String statut = jsonStatut.toString();
+                                InfosAbsencesProf absence = new InfosAbsencesProf(cours, heureD, prenomP, nomP, statut);
+                                infos.add(absence);
+
+                                AbsenceProfListAdapter adapter = new AbsenceProfListAdapter(getApplicationContext(), R.layout.affichage_absences_prof, infos);
+                                mListView.setAdapter(adapter);
+                            } catch( JSONException e){
+                                e.printStackTrace();
+                            }
+                        } else {
+
+                            try {
+
+                                for (int i = 0; i < mJsonArray.length(); i++) {
+                                    Object jsonCours = mJsonArray.getJSONObject(i).get("matiere");
+                                    String cours = jsonCours.toString();
+                                    Object jsonHeureD = mJsonArray.getJSONObject(i).get("heure_debut");
+                                    String heureD = jsonHeureD.toString();
+//                                    Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
+//                                    String heureF = jsonHeureF.toString();
+                                    Object jsonNomP = mJsonArray.getJSONObject(i).get("nom_professeur");
+                                    String nomP = jsonNomP.toString();
+                                    Object jsonPrenomP = mJsonArray.getJSONObject(i).get("prenom_professeur");
+                                    String prenomP = jsonPrenomP.toString();
+                                    Object jsonStatut = mJsonArray.getJSONObject(i).get("statut");
+                                    String statut = jsonStatut.toString();
+
+                                    InfosAbsencesProf absence = new InfosAbsencesProf(cours, heureD, prenomP, nomP, statut);
+                                    infos.add(absence);
+                                }
+
+
+
+                                AbsenceProfListAdapter adapter = new AbsenceProfListAdapter(getApplicationContext(), R.layout.affichage_absences_prof, infos);
+                                mListView.setAdapter(adapter);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        System.out.println(error.toString());
+                        System.out.println("RatéRaté");
+                    }
+                });
+
+
+        queue.add(jsObjRequest);
     }
 
 }

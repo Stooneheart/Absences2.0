@@ -164,6 +164,8 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
 
+        mListView.setTextFilterEnabled(true);
+
         theFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -173,8 +175,8 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
+                    adapter.getFilter().filter(newText);
+                return false;
             }
         });
 
