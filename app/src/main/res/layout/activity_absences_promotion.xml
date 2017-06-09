@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/absences_prom"
         android:orientation="vertical" android:layout_width="match_parent"
@@ -21,28 +21,29 @@
             style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="138dp"
             android:layout_height="45dp"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginLeft="383dp"
+            android:layout_marginStart="383dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/border"
             android:entries="@array/promos"
             android:textAlignment="center" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/spinner2"
-            android:layout_above="@+id/listViewPromo"
-            android:id="@+id/linearLayout"
-            >
+            android:layout_marginTop="120dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Module"
+                android:text="@string/module"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -51,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
-                android:text="Date"
+                android:text="@string/date"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -60,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".8"
-                android:text="Prénom élève"
+                android:text="@string/pr_nom_l_ve"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -69,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".8"
-                android:text="Nom élève"
+                android:text="@string/nom_l_ve"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -77,10 +78,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_weight=".7"
-                android:text="Prénom Prof"
-                android:textAlignment="textEnd"
+                android:text="@string/pr_nom_prof"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_weight="1"
+                android:text="@string/nom_prof"
+                android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -88,17 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Nom Prof"
-                android:textAlignment="textEnd"
-                android:layout_gravity="end"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Statut"
+                android:text="@string/statut"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -107,13 +108,24 @@
         <ListView
             android:id="@+id/listViewPromo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="550dp"
+            android:layout_marginTop="150dp"
             android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"/>
+            android:headerDividersEnabled="false" />
 
-
-
-    </LinearLayout>
+        <Button
+            android:id="@+id/buttonGoStats"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:onClick="onClick"
+            android:text="@string/afficher_les_statistiques_correspondantes"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/spinner2"
+            android:layout_toRightOf="@+id/spinner2"
+            android:layout_toEndOf="@+id/spinner2"
+            android:layout_marginLeft="134dp"
+            android:layout_marginStart="134dp" />
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

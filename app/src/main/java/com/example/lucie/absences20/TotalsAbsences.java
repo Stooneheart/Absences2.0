@@ -16,8 +16,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jjoe64.graphview.series.DataPoint;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,12 +39,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by lucie on 22/05/2017.
  */
 
-public class TotalsAbsences extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TotalsAbsences extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -63,6 +69,8 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         token = getIntent().getStringExtra("token");
         theFilter = (SearchView) findViewById(R.id.searchFilter);
         Log.d(TAG, "OnCreate : started. ");
+        Button button = (Button) findViewById(R.id.buttonStatsAbs);
+        button.setOnClickListener(this);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://10.0.2.2/api/absences.php?token=" + token;
@@ -80,14 +88,22 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        try {
 
-                            mJsonInfos = new JSONObject(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
 
                         infos = new ArrayList<>();
+
+                    //    ArrayList<InfosAbsences> infos = new ArrayList<>();
+                     //   ArrayList<String> infosString = new ArrayList<>();
+
 
                         if(mJsonArray.length() == 0){
                             try {
@@ -130,6 +146,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                     String statut = jsonStatut.toString();
                                     absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
                                     infos.add(absence);
+                                    //infosString.add(cours);
                                 }
 
                                 adapter = new AbsencesListeAdapter(getApplicationContext(), R.layout.affichage_absences, infos);
@@ -230,6 +247,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
                 this.finish();
                 this.startActivity(intent3);
             } catch (JSONException e) {
@@ -267,7 +285,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, choix_promotion.class);
+                Intent intent3 = new Intent(this, AbsencesDirect.class);
                 intent3.putExtra("user", jsonObject.toString());
                 this.finish();
                 this.startActivity(intent3);
@@ -334,6 +352,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         JSONObject json = null;
         String nomPrenom = "";
         try {
+            userInfos = getIntent().getStringExtra("user");
             json = new JSONObject(userInfos);
             nomPrenom= json.getString("prenom") + " " + json.getString("nom").toUpperCase();
         } catch (JSONException e) {
@@ -345,4 +364,12 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, MesStatistiques.class);
+        intent.putExtra("user", userInfos);
+        intent.putExtra("token", token);
+        this.finish();
+        startActivity(intent);
+    }
 }
