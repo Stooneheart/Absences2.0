@@ -11,44 +11,44 @@
         android:id="@+id/tvmodule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="14"
+        android:layout_weight="20"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="14"
+        android:layout_weight="20"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvpreprof"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="14"
+        android:layout_weight="20"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvnomprof"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="14"
+        android:layout_weight="20"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvstatut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="15"
+        android:layout_weight="20"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 </LinearLayout>

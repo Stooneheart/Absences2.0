@@ -58,6 +58,7 @@
     <string name="nom_l_ve">Nom élève</string>
     <string name="pr_nom_prof">Prénom Prof</string>
     <string name="pr_nom_l_ve">Prénom élève</string>
+    <string name="nombre_d_absences">Nombre d\'absences</string>
 
     <string-array name="promos">
     </string-array>

@@ -14,7 +14,7 @@
         android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvdate"
@@ -23,7 +23,7 @@
         android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvpreprof"
@@ -32,7 +32,7 @@
         android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvnomprof"
@@ -41,7 +41,7 @@
         android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvpreeleve"
@@ -50,7 +50,7 @@
         android:layout_weight="14"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvnomeleve"
@@ -59,7 +59,7 @@
         android:layout_weight="15"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvstatut"
@@ -68,5 +68,5 @@
         android:layout_weight="15"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 </LinearLayout>
