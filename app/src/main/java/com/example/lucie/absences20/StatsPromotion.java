@@ -420,7 +420,7 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
                             }
                         });
 
-                        series.setSpacing(20);
+                        series.setSpacing(50);
 
 // draw values on top
                       //  series.setDrawValuesOnTop(true);

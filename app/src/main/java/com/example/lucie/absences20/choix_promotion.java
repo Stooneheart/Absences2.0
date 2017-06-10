@@ -305,7 +305,6 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
                 e.printStackTrace();
             }
         }
-
     }
 
     public void Requete(){

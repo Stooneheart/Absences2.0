@@ -1,12 +1,17 @@
 package com.example.lucie.absences20;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,14 +46,14 @@ public class ElevesDirectListeAdapter extends ArrayAdapter<InfosElevesDirect> {
 
         TextView tvprenom = (TextView) convertView.findViewById(R.id.tvprenom);
         TextView tvnom = (TextView) convertView.findViewById(R.id.tvnom);
-        TextView tvabsent = (TextView) convertView.findViewById(R.id.tvabsent);
+        ImageView ivstatut = (ImageView) convertView.findViewById(R.id.ivstatut);
 
         tvprenom.setText(prenom);
         tvnom.setText(nom);
         if(absent)
-            tvabsent.setText("absent");
+            ivstatut.setImageResource(R.drawable.red_check);
         else
-            tvabsent.setText("present");
+            ivstatut.setImageResource(R.drawable.green_check);
 
         return convertView;
 

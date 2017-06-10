@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -35,7 +36,7 @@ import java.util.List;
  * Created by lucie on 22/05/2017.
  */
 
-public class AbsencesElevesDirect extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class AbsencesElevesDirect extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -57,6 +58,8 @@ public class AbsencesElevesDirect extends AppCompatActivity implements Navigatio
         mListView = (ListView) findViewById(R.id.listViewElevesDirect);
         lesNomCours = getIntent().getStringArrayExtra("lesCours");
         lesIdCours = getIntent().getStringArrayExtra("lesIdCours");
+        Button button = (Button) findViewById(R.id.buttonActualiser);
+        button.setOnClickListener(this);
 
         List<String> list = Arrays.asList(lesNomCours);
         FillSpinner(list);
@@ -388,5 +391,13 @@ public class AbsencesElevesDirect extends AppCompatActivity implements Navigatio
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        String idSelection = String.valueOf(Arrays.asList(lesNomCours).indexOf(coursAVisu));
+        String idPromo = lesIdCours[Integer.valueOf(idSelection)];
+
+        AfficherElevesPresentsAbsents(idPromo);
     }
 }

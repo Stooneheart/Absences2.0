@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nom_prof">Nom Prof</string>
+    <string name="Autres">Autres</string>
+    <string name="Fonctions">Fonctions</string>
+    <string name="Prevenir_absence">Prévenir une absence</string>
+    <string name="Username">Nom de compte</string>
+    <string name="WPassword">Mauvaise combinaison nom de compte/mot de passe</string>
+    <string name="absences_anticipes"></string>
+    <string name="login">Nom de compte</string>
+    <string name="mes_absences">Mes absences</string>
+    <string name="mes_statistiques">Mes statistiques</string>
+    <string name="open">Ouvrir</string>
+    <string name="password">Mot de passe</string>
+    <string name="se_deconnecter">Se déconnecter</string>
+    <string name="user">Utilisateur</string>
+    <string name="connexion">Connexion</string>
 </resources>

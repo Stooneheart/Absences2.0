@@ -25,12 +25,11 @@
         android:textAlignment="center"
         android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/tvabsent"
+    <ImageView
+        android:id="@+id/ivstatut"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="28dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="34"
-        android:text=""
-        android:textAlignment="center"
-        android:textSize="24sp" />
+        android:contentDescription="@string/statut" />
 </LinearLayout>
