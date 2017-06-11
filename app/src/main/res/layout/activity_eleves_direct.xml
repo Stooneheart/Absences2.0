@@ -34,7 +34,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:background="@drawable/border"
-            android:entries="@array/promos"
             android:textAlignment="center" />
 
         <LinearLayout

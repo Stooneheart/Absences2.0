@@ -40,8 +40,6 @@ public class AbsencesListeAdapter extends ArrayAdapter<InfosAbsences> {
         String nom_prof = getItem(position).getNom_prof();
         String statut = getItem(position).getStatut();
 
-        InfosAbsences infoAbs = new InfosAbsences(module,date,prenom_prof,nom_prof,statut);
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 

@@ -60,8 +60,22 @@
     <string name="pr_nom_l_ve">Prénom élève</string>
     <string name="nombre_d_absences">Nombre d\'absences</string>
     <string name="actualiser">Actualiser</string>
+    <string name="modifier_le_statut_de_l_absence">Modifier le statut de l\'absence:</string>
+    <string name="supprimer_l_absence">Supprimer l\'absence :</string>
+    <string name="supprimer_absence">Supprimer l\'absence</string>
+    <string name="annuler">Annuler</string>
+    <string name="valider">Valider</string>
+    <string name="ou">OU</string>
+    <string name="absence_de">Absence de :</string>
+    <string name="cours_de">Cours :</string>
+    <string name="redirection_en_cours">Redirection en cours....</string>
 
-    <string-array name="promos">
+    <string-array name="status">
+        <item>absence justifiee</item>
+        <item>absent</item>
+        <item>depart anticipe</item>
+        <item>retard</item>
+        <item>exclu</item>
     </string-array>
 
 </resources>

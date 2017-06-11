@@ -34,8 +34,6 @@ public class ClassementPromoListeAdapter extends ArrayAdapter<InfosClassement> {
         String nom = getItem(position).getNom();
         String nbrAbsence = getItem(position).getNbr_absences();
 
-        InfosClassement infoClassement = new InfosClassement(prenom,nom,nbrAbsence);
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 

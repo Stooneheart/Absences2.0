@@ -38,7 +38,6 @@ public class AbsencesPromoListeAdapter extends ArrayAdapter<InfosAbsencesPromoti
         String nom_eleve = getItem(position).getNom_eleve();
         String statut = getItem(position).getStatut();
 
-        InfosAbsencesPromotion infoAbs = new InfosAbsencesPromotion(module,date,prenom_prof,nom_prof, prenom_eleve, nom_eleve, statut);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);

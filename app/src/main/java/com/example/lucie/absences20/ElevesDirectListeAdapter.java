@@ -39,8 +39,6 @@ public class ElevesDirectListeAdapter extends ArrayAdapter<InfosElevesDirect> {
         String nom = getItem(position).getNom();
         boolean absent = getItem(position).isAbsent();
 
-        InfosElevesDirect infoClassement = new InfosElevesDirect(prenom,nom,absent);
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 

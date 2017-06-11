@@ -1,13 +1,18 @@
 package com.example.lucie.absences20;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,7 +44,7 @@ import java.util.List;
  * Created by lucie on 22/05/2017.
  */
 
-public class AbsencesPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class AbsencesPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -51,6 +57,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
     private String [] promos;
     private String [] idPromos;
     private Spinner spinner;
+    ArrayList<InfosAbsencesPromotion> infos;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -62,6 +69,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         idPromos = getIntent().getStringArrayExtra("idPromos");
         Button button = (Button) findViewById(R.id.buttonGoStats);
         button.setOnClickListener(this);
+        mListView.setOnItemClickListener(this);
 
         List<String> list = Arrays.asList(promos);
         FillSpinner(list);
@@ -74,10 +82,6 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         Log.d(TAG, "OnCreate : started. ");
 
         spinner.setSelection(Integer.valueOf(idSelection));
-
-        String id = idPromos[Integer.valueOf(idSelection)];
-
-        AfficherAbsencePromo(id);
 
         userType = 0;
         try {
@@ -304,10 +308,12 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                             }
                         }
 
-                        ArrayList<InfosAbsencesPromotion> infos = new ArrayList<>();
+                        infos = new ArrayList<>();
 
                         if(mJsonArray.length() == 0){
                             try {
+                                Object jsonId = mJsonInfos.get("id");
+                                String id = jsonId.toString();
                                 Object jsonCours = mJsonInfos.get("matiere");
                                 String cours = jsonCours.toString();
                                 Object jsonHeureD = mJsonInfos.get("heure_debut");
@@ -324,7 +330,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                                 String nomE = jsonNomE.toString();
                                 Object jsonStatut = mJsonInfos.get("statut");
                                 String statut = jsonStatut.toString();
-                                InfosAbsencesPromotion absence = new InfosAbsencesPromotion(cours, heureD, prenomP, nomP, prenomE, nomE, statut);
+                                InfosAbsencesPromotion absence = new InfosAbsencesPromotion(id, cours, heureD, prenomE, nomE, prenomP, nomP, statut);
                                 infos.add(absence);
 
                                 AbsencesPromoListeAdapter adapter = new AbsencesPromoListeAdapter(getApplicationContext(), R.layout.affichage_absences_promo, infos);
@@ -337,6 +343,9 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                             try {
 
                                 for (int i = 0; i < mJsonArray.length(); i++) {
+
+                                    Object jsonId = mJsonArray.getJSONObject(i).get("id");
+                                    String id = jsonId.toString();
                                     Object jsonCours = mJsonArray.getJSONObject(i).get("matiere");
                                     String cours = jsonCours.toString();
                                     Object jsonHeureD = mJsonArray.getJSONObject(i).get("heure_debut");
@@ -354,7 +363,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                                     Object jsonStatut = mJsonArray.getJSONObject(i).get("statut");
                                     String statut = jsonStatut.toString();
 
-                                    InfosAbsencesPromotion absence = new InfosAbsencesPromotion(cours, heureD, prenomP, nomP, prenomE, nomE, statut);
+                                    InfosAbsencesPromotion absence = new InfosAbsencesPromotion(id, cours, heureD, prenomE, nomE, prenomP, nomP, statut);
                                     infos.add(absence);
                                 }
 
@@ -408,13 +417,98 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, StatsPromotion.class);
-        intent.putExtra("token", token);
-        intent.putExtra("promos", promos);
-        intent.putExtra("idPromos", idPromos);
-        intent.putExtra("promo", promo);
-        intent.putExtra("user", userInfos);
-        this.finish();
-        startActivity(intent);
+        switch(v.getId()) {
+            case R.id.buttonGoStats :
+            Intent intent = new Intent(this, StatsPromotion.class);
+            intent.putExtra("token", token);
+            intent.putExtra("promos", promos);
+            intent.putExtra("idPromos", idPromos);
+            intent.putExtra("promo", promo);
+            intent.putExtra("user", userInfos);
+            this.finish();
+            startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final InfosAbsencesPromotion absence = infos.get(position);
+
+        TextView title = new TextView(this);
+        title.setText("Statut de l'absence :");
+        title.setBackgroundColor(Color.GRAY);
+        title.setPadding(10, 20, 10, 20);
+        title.setGravity(Gravity.CENTER);
+        title.setTextColor(Color.BLACK);
+        title.setTextSize(24);
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        View dialog = View.inflate(this,R.layout.affichage_dialog_statut,null);
+        adb.setCustomTitle(title);
+        adb.setView(dialog);
+        TextView tvInfos = (TextView) dialog.findViewById(R.id.tvInfos);
+        tvInfos.setText("Date : " + absence.getDate() + "  -  Élève : " + absence.getPrenom_eleve() + " " + absence.getNom_eleve() + "  -  Cours : " + absence.getModule() + "  -  Statut actuel : " + absence.getStatut());
+        final Spinner spin = (Spinner) dialog.findViewById(R.id.spinnerStatut);
+        Button buttonSuppr = (Button) dialog.findViewById(R.id.btnSupprimer);
+
+        final AlertDialog dialogCreate = adb.show();
+        buttonSuppr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModifierStatut(absence.getId(), "delete");
+                String idSelection = String.valueOf(Arrays.asList(promos).indexOf(promo));
+                String idPromo = idPromos[Integer.valueOf(idSelection)];
+                AfficherAbsencePromo(idPromo);
+                dialogCreate.dismiss();
+                Toast toast = Toast.makeText(getApplicationContext(), "Suppression effectuée avec succès !", Toast.LENGTH_LONG);
+                toast.show();
+
+            }
+        });
+        Button buttonValid = (Button) dialog.findViewById(R.id.btnValider);
+        buttonValid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModifierStatut(absence.getId(), spin.getSelectedItem().toString());
+                String idSelection = String.valueOf(Arrays.asList(promos).indexOf(promo));
+                String idPromo = idPromos[Integer.valueOf(idSelection)];
+                AfficherAbsencePromo(idPromo);
+                dialogCreate.dismiss();
+                Toast toast = Toast.makeText(getApplicationContext(), "Modification effectuée avec succès !", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+        Button buttonAnnul = (Button) dialog.findViewById(R.id.btnAnnuler);
+        buttonAnnul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogCreate.dismiss();
+            }
+        });
+    }
+
+    public void ModifierStatut (String id, String statut){
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://10.0.2.2/api/statut.php?token=" + token +"&statut=" + statut +"&id=" + id;
+
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("Réussiréussi");
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        System.out.println(error.toString());
+                        System.out.println("RatéRaté");
+                    }
+                });
+
+        queue.add(jsObjRequest);
     }
 }
