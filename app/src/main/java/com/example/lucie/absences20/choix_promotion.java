@@ -56,7 +56,6 @@ public class choix_promotion extends AppCompatActivity implements NavigationView
 
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        promos = getResources().getStringArray(R.array.promos);
         userInfos = getIntent().getStringExtra("user");
         token = getIntent().getStringExtra("token");
         choixAffichage = getIntent().getStringExtra("affichage");

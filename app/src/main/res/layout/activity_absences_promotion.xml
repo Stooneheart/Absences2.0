@@ -29,7 +29,6 @@
             android:layout_marginStart="383dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/border"
-            android:entries="@array/promos"
             android:textAlignment="center" />
 
         <LinearLayout

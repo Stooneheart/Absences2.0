@@ -2,11 +2,16 @@ package com.example.lucie.absences20;
 
 import android.support.v7.app.AppCompatActivity;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.util.Locale;
+
 /**
  * Created by lucie on 22/05/2017.
  */
 
 public class InfosAbsencesPromotion extends AppCompatActivity {
+    private String id;
     private String module;
     private String date;
     private String prenom_eleve;
@@ -15,14 +20,39 @@ public class InfosAbsencesPromotion extends AppCompatActivity {
     private String nom_prof;
     private String statut;
 
-    public InfosAbsencesPromotion(String module, String date, String prenom_eleve, String nom_eleve, String prenom_prof, String nom_prof, String statut) {
+    public InfosAbsencesPromotion(String id, String module, String date, String prenom_eleve, String nom_eleve, String prenom_prof, String nom_prof, String statut) {
+        this.id = id;
         this.module = module;
-        this.date = date;
+        date = date.substring(0, date.length()-9);
+        Date dateSql = Date.valueOf(date);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
+        this.date = df.getDateInstance().format(dateSql);
         this.prenom_eleve = prenom_eleve;
         this.nom_eleve = nom_eleve;
         this.prenom_prof = prenom_prof;
         this.nom_prof = nom_prof;
         this.statut = statut;
+    }
+
+    public InfosAbsencesPromotion(String module, String date, String prenom_eleve, String nom_eleve, String prenom_prof, String nom_prof, String statut) {
+        this.module = module;
+        date = date.substring(0, date.length()-9);
+        Date dateSql = Date.valueOf(date);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
+        this.date = df.getDateInstance().format(dateSql);
+        this.prenom_eleve = prenom_eleve;
+        this.nom_eleve = nom_eleve;
+        this.prenom_prof = prenom_prof;
+        this.nom_prof = nom_prof;
+        this.statut = statut;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPrenom_eleve() {
