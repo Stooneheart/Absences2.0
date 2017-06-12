@@ -73,6 +73,7 @@
                 android:layout_weight=".8"
                 android:text="@string/pr_nom_l_ve"
                 android:textAlignment="textStart"
+                android:layout_gravity="start"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -82,13 +83,14 @@
                 android:layout_weight=".8"
                 android:text="@string/nom_l_ve"
                 android:textAlignment="textStart"
+                android:layout_gravity="start"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="start"
                 android:layout_weight=".7"
                 android:text="@string/pr_nom_prof"
                 android:textAlignment="textStart"
@@ -127,14 +129,14 @@
             android:id="@+id/buttonGoStats"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
+            android:layout_alignTop="@+id/spinner2"
+            android:layout_marginLeft="134dp"
+            android:layout_marginStart="134dp"
+            android:layout_toEndOf="@+id/spinner2"
+            android:layout_toRightOf="@+id/spinner2"
             android:onClick="onClick"
             android:text="@string/afficher_les_statistiques_correspondantes"
-            android:textSize="18sp"
-            android:layout_alignTop="@+id/spinner2"
-            android:layout_toRightOf="@+id/spinner2"
-            android:layout_toEndOf="@+id/spinner2"
-            android:layout_marginLeft="134dp"
-            android:layout_marginStart="134dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

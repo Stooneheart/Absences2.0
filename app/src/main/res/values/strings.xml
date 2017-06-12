@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Absences EPF</string>
+    <string name="app_name">EPF Absences</string>
     <string name="login">Login</string>
     <string name="Username">Username</string>
     <string name="password">Password</string>
@@ -20,10 +20,10 @@
     <string name="cours">subject</string>
     <string name="heure_debut">beggining hour</string>
     <string name="heure_fin">end hour</string>
-    <string name="nom_prof">teacher surname</string>
-    <string name="prenom_prof">teacher forename</string>
-    <string name="statut">statut</string>
-    <string name="absences_promo">Absences par promotion</string>
+    <string name="nom_prof">Surname teacher</string>
+    <string name="prenom_prof">Name teacher</string>
+    <string name="statut">Status</string>
+    <string name="absences_promo">Promotion absences</string>
     <string name="layout_stats">Layout stats</string>
     <string name="layout_prevenir_absence">Layout warn an absence</string>
     <string name="layout_absences">Layout absences</string>
@@ -31,44 +31,42 @@
     <string name="user">User</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="absences_anticipes">Absences anticipées</string>
-    <string name="absences_en_direct">Absences en DIRECT</string>
-    <string name="absences_professeurs">Absences des professeurs</string>
-    <string name="absences_eleves">Absences élèves</string>
-    <string name="alertes">Alertes</string>
-    <string name="statistiques_eleves">Statistiques élèves</string>
+    <string name="absences_anticipes">Anticipated absences</string>
+    <string name="absences_professeurs">Professors absences</string>
+    <string name="absences_eleves">Students absences</string>
+    <string name="alertes">Alerts</string>
+    <string name="statistiques_eleves">Student statistics</string>
     <string name="layout_alertes">Layout alertes</string>
-    <string name="layout_absences_par_promotion">Affichage absences promotion :</string>
+    <string name="layout_absences_par_promotion">Show promotion absences :</string>
     <string name="layout_absences_anticipees">Layout absences anticipées</string>
-    <string name="layout_absences_en_direct">Choisissez le cours à afficher en direct :</string>
+    <string name="layout_absences_en_direct">Choose the subject to show live :</string>
     <string name="layout_absences_professeurs">Layout Absences professeurs</string>
-    <string name="layout_choix_promotion">Choisissez la promotion à afficher :</string>
-    <string name="voir_les_absences">Voir les absences</string>
-    <string name="statistiques_par_promotion">Statistiques par promotion</string>
-    <string name="classement_absences">Afficher le classement d\'absences des élèves</string>
-    <string name="afficher_graphique_promotion">Afficher le graphique d\'absences de la promotion</string>
-    <string name="voir_les_absences_en_direct">Voir les absences en direct du cours selectionné</string>
-    <string name="afficher_mes_statistiques">Afficher mes statistiques</string>
-    <string name="afficher_ma_liste_d_absences">Afficher ma liste d\'absences</string>
-    <string name="afficher_les_statistiques_correspondantes">Afficher les statistiques correspondantes</string>
-    <string name="afficher_la_liste_d_absences_correspondante">Afficher la liste d\'absences correspondante</string>
+    <string name="layout_choix_promotion">Choose the promotion to show :</string>
+    <string name="voir_les_absences">Show the absences</string>
+    <string name="statistiques_par_promotion">Statistics for a promotion</string>
+    <string name="classement_absences">Show the ranking of the students absences</string>
+    <string name="afficher_graphique_promotion">Show the absenteeism graph for the promotion</string>
+    <string name="voir_les_absences_en_direct">Show the absences live of the selected subject</string>
+    <string name="afficher_mes_statistiques">Show my statistics</string>
+    <string name="afficher_ma_liste_d_absences">Show my absenteeism list</string>
+    <string name="afficher_les_statistiques_correspondantes">Show the statistics corresponding</string>
+    <string name="afficher_la_liste_d_absences_correspondante">Show the absenteeism list corresponding</string>
     <string name="date">Date</string>
-    <string name="module">Module</string>
-    <string name="nom_l_ve">Nom élève</string>
-    <string name="pr_nom_prof">Prénom Prof</string>
-    <string name="pr_nom_l_ve">Prénom élève</string>
-    <string name="nombre_d_absences">Nombre d\'absences</string>
-    <string name="actualiser">Actualiser</string>
-    <string name="modifier_le_statut_de_l_absence">Modifier le statut de l\'absence:</string>
-    <string name="supprimer_l_absence">Supprimer l\'absence :</string>
-    <string name="supprimer_absence">Supprimer l\'absence</string>
-    <string name="annuler">Annuler</string>
-    <string name="valider">Valider</string>
-    <string name="ou">OU</string>
-    <string name="absence_de">Absence de :</string>
-    <string name="cours_de">Cours :</string>
-    <string name="redirection_en_cours">Redirection en cours....</string>
+    <string name="module">Subject</string>
+    <string name="nom_l_ve">Surname student</string>
+    <string name="pr_nom_prof">Name teacher</string>
+    <string name="pr_nom_l_ve">Name student</string>
+    <string name="nombre_d_absences">Number of absences</string>
+    <string name="actualiser">Actualize</string>
+    <string name="modifier_le_statut_de_l_absence">Modify the absence\'s status :</string>
+    <string name="supprimer_l_absence">Delete the absence :</string>
+    <string name="supprimer_absence">Delete the absence</string>
+    <string name="annuler">Cancel</string>
+    <string name="valider">Validate</string>
+    <string name="ou">OR</string>
+    <string name="absence_de">Absence of</string>
+    <string name="cours_de">Subject of :</string>
+    <string name="redirection_en_cours">Redirecting ...</string>
 
     <string-array name="status">
         <item>absence justifiee</item>
@@ -77,5 +75,6 @@
         <item>retard</item>
         <item>exclu</item>
     </string-array>
+    <string name="absences_direct">LIVE absences</string>
 
 </resources>

@@ -22,7 +22,7 @@
             <item
                 android:id="@+id/absences_direct"
                 android:icon="@mipmap/ic_pan_tool_black_24dp"
-                android:title="@string/absences_en_direct" />
+                android:title="@string/absences_direct" />
 
             <item
                 android:id="@+id/alertes"

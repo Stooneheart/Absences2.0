@@ -91,7 +91,7 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
             txtpreprof.setText(prenom_prof);
             txtnomprof.setText(nom_prof);
             txtstatut.setText(statut);
-        
+
 
         return convertView;
 
