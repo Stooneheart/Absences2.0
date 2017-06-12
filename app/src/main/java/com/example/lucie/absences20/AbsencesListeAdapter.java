@@ -32,6 +32,7 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
     private List<InfosAbsences> mStringFilterList;
     private ValueFilter valueFilter;
     private int size;
+    private ArrayList<InfosAbsences> filterList;
 
     public AbsencesListeAdapter(Context context, ArrayList<InfosAbsences> objects, int size) {
         mContext = context;
@@ -67,28 +68,30 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
             convertView = inflater.inflate(R.layout.affichage_absences, null);
         }
 
-        InfosAbsences absence = absList.get(position);
-        String module = absence.getModule();
-        String date = absence.getDate();
-        String prenom_prof = absence.getPrenom_prof();
-        String nom_prof = absence.getNom_prof();
-        String statut = absence.getStatut();
 
-        //LayoutInflater inflater = LayoutInflater.from(mContext);
-        //convertView = inflater.inflate(mResource, parent, false);
+            InfosAbsences absence = absList.get(position);
+            String module = absence.getModule();
+            String date = absence.getDate();
+            String prenom_prof = absence.getPrenom_prof();
+            String nom_prof = absence.getNom_prof();
+            String statut = absence.getStatut();
+
+            //LayoutInflater inflater = LayoutInflater.from(mContext);
+            //convertView = inflater.inflate(mResource, parent, false);
 
 
-        TextView txtmodule = (TextView) convertView.findViewById(R.id.tvmodule);
-        TextView txtdate = (TextView) convertView.findViewById(R.id.tvdate);
-        TextView txtpreprof = (TextView) convertView.findViewById(R.id.tvpreprof);
-        TextView txtnomprof = (TextView) convertView.findViewById(R.id.tvnomprof);
-        TextView txtstatut = (TextView) convertView.findViewById(R.id.tvstatut);
+            TextView txtmodule = (TextView) convertView.findViewById(R.id.tvmodule);
+            TextView txtdate = (TextView) convertView.findViewById(R.id.tvdate);
+            TextView txtpreprof = (TextView) convertView.findViewById(R.id.tvpreprof);
+            TextView txtnomprof = (TextView) convertView.findViewById(R.id.tvnomprof);
+            TextView txtstatut = (TextView) convertView.findViewById(R.id.tvstatut);
 
-        txtmodule.setText(module);
-        txtdate.setText(date);
-        txtpreprof.setText(prenom_prof);
-        txtnomprof.setText(nom_prof);
-        txtstatut.setText(statut);
+            txtmodule.setText(module);
+            txtdate.setText(date);
+            txtpreprof.setText(prenom_prof);
+            txtnomprof.setText(nom_prof);
+            txtstatut.setText(statut);
+        
 
         return convertView;
 
@@ -109,9 +112,13 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
             FilterResults results = new FilterResults();
 
             if (constraint != null && constraint.length() > 0) {
-                ArrayList<InfosAbsences> filterList = new ArrayList<>();
-                for (int i = 0; i < mStringFilterList.size(); i++) {
+                filterList = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
                     if ((mStringFilterList.get(i).getModule().toUpperCase())
+                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getDate().toUpperCase())
+                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getNom_prof().toUpperCase())
+                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getPrenom_prof().toUpperCase())
+                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getStatut().toUpperCase())
                             .contains(constraint.toString().toUpperCase())) {
 
                         InfosAbsences absence = new InfosAbsences(mStringFilterList.get(i)
@@ -123,7 +130,7 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
                 results.count = filterList.size();
                 results.values = filterList;
             } else {
-                results.count = mStringFilterList.size();
+                results.count = size;
                 results.values = mStringFilterList;
             }
             return results;
