@@ -31,11 +31,22 @@
             android:background="@drawable/border"
             android:textAlignment="center" />
 
+        <SearchView
+            android:id="@+id/searchFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/spinner2"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            app:queryHint="Search..." />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="160dp"
             android:orientation="horizontal">
 
             <TextView
@@ -108,7 +119,7 @@
             android:id="@+id/listViewPromo"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:layout_marginTop="165dp"
+            android:layout_marginTop="200dp"
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false" />
 
