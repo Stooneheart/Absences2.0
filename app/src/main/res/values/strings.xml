@@ -67,6 +67,9 @@
     <string name="absence_de">Absence of</string>
     <string name="cours_de">Subject of :</string>
     <string name="redirection_en_cours">Redirecting ...</string>
+    <string name="recherche">Research</string>
+    <string name="filtrer">Filter</string>
+    <string name="defiltrer">Unfilter</string>
 
     <string-array name="status">
         <item>absence justifiee</item>

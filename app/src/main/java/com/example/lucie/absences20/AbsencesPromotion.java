@@ -57,12 +57,15 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
     private String [] promos;
     private String [] idPromos;
     private Spinner spinner;
-    ArrayList<InfosAbsencesPromotion> infos;
+    private ArrayList<InfosAbsencesPromotion> infos;
+    private AbsencesPromoListeAdapter adapter;
+    private EditText recherchePromo;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absences_promotion);
         spinner = (Spinner) findViewById(R.id.spinner2);
+        recherchePromo = (EditText) findViewById(R.id.filtreProm);
 
         mListView = (ListView) findViewById(R.id.listViewPromo);
         promos = getIntent().getStringArrayExtra("promos");
@@ -107,6 +110,8 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -318,8 +323,6 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                                 String cours = jsonCours.toString();
                                 Object jsonHeureD = mJsonInfos.get("heure_debut");
                                 String heureD = jsonHeureD.toString();
-//                                Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
-//                                String heureF = jsonHeureF.toString();
                                 Object jsonNomP = mJsonInfos.get("nom_professeur");
                                 String nomP = jsonNomP.toString();
                                 Object jsonPrenomP = mJsonInfos.get("prenom_professeur");
@@ -333,7 +336,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                                 InfosAbsencesPromotion absence = new InfosAbsencesPromotion(id, cours, heureD, prenomE, nomE, prenomP, nomP, statut);
                                 infos.add(absence);
 
-                                AbsencesPromoListeAdapter adapter = new AbsencesPromoListeAdapter(getApplicationContext(), R.layout.affichage_absences_promo, infos);
+                                adapter = new AbsencesPromoListeAdapter(getApplicationContext(), infos);
                                 mListView.setAdapter(adapter);
                             } catch( JSONException e){
                                 e.printStackTrace();
@@ -350,8 +353,6 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                                     String cours = jsonCours.toString();
                                     Object jsonHeureD = mJsonArray.getJSONObject(i).get("heure_debut");
                                     String heureD = jsonHeureD.toString();
-//                                    Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
-//                                    String heureF = jsonHeureF.toString();
                                     Object jsonNomP = mJsonArray.getJSONObject(i).get("nom_professeur");
                                     String nomP = jsonNomP.toString();
                                     Object jsonPrenomP = mJsonArray.getJSONObject(i).get("prenom_professeur");
@@ -369,7 +370,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
 
 
 
-                                AbsencesPromoListeAdapter adapter = new AbsencesPromoListeAdapter(getApplicationContext(), R.layout.affichage_absences_promo, infos);
+                                adapter = new AbsencesPromoListeAdapter(getApplicationContext(), infos);
                                 mListView.setAdapter(adapter);
 
                             } catch (JSONException e) {
@@ -382,8 +383,6 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        System.out.println(error.toString());
-                        System.out.println("RatéRaté");
                     }
                 });
 
@@ -485,6 +484,18 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                 dialogCreate.dismiss();
             }
         });
+    }
+
+    public void onClickFilterPromo(View v){
+        adapter.getFilter(recherchePromo.getText().toString());
+        mListView.setAdapter(adapter);
+
+    }
+
+    public void onClickUnfilterPromo(View v){
+        recherchePromo.setText(null);
+        adapter.getUnfilter();
+        mListView.setAdapter(adapter);
     }
 
     public void ModifierStatut (String id, String statut){

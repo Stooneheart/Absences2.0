@@ -62,4 +62,7 @@
     <string name="valider">Valider</string>
     <string name="voir_les_absences">Voir les absences</string>
     <string name="voir_les_absences_en_direct">Voir les absences en direct du cours selectionné</string>
+    <string name="recherche">Recherche</string>
+    <string name="filtrer">Filtrer</string>
+    <string name="defiltrer">Défiltrer</string>
 </resources>

@@ -19,10 +19,11 @@ public class InfosAbsences extends AppCompatActivity {
 
     public InfosAbsences(String module, String date, String prenom_prof, String nom_prof, String statut) {
         this.module = module;
-        date = date.substring(0, date.length()-9);
-        Date dateSql = Date.valueOf(date);
-        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
-        this.date = df.getDateInstance().format(dateSql);
+      //  date = date.substring(0, date.length()-9);
+//        Date dateSql = Date.valueOf(date);
+  //      DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
+       // this.date = df.getDateInstance().format(dateSql);
+        this.date = date;
         this.prenom_prof = prenom_prof;
         this.nom_prof = nom_prof;
         this.statut = statut;

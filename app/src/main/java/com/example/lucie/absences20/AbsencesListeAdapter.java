@@ -1,51 +1,40 @@
 package com.example.lucie.absences20;
 
 import android.content.Context;
-import android.icu.text.IDNA;
-import android.support.annotation.LayoutRes;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Created by lucie on 22/05/2017.
  */
 
-public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
+public class AbsencesListeAdapter extends BaseAdapter{
     private static final String TAG = "AbsencesListeAdapter";
 
     private Context mContext;
-    //int mResource;
-    private List<InfosAbsences> absList;
+    private ArrayList<InfosAbsences> absList;
     private LayoutInflater inflater;
-    private List<InfosAbsences> mStringFilterList;
-    private ValueFilter valueFilter;
-    private int size;
     private ArrayList<InfosAbsences> filterList;
 
-    public AbsencesListeAdapter(Context context, ArrayList<InfosAbsences> objects, int size) {
+    public AbsencesListeAdapter(Context context, ArrayList<InfosAbsences> objects) {
         mContext = context;
-        //mResource = resource;
         this.absList = objects;
-        mStringFilterList = objects;
-        this.size = size;
     }
 
 
     @Override
     public int getCount() {
-        return size;
+        if(filterList == null) {
+            return absList.size();
+        } else {
+            return filterList.size();
+        }
     }
 
     public Object getItem(int i){
@@ -68,6 +57,7 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
             convertView = inflater.inflate(R.layout.affichage_absences, null);
         }
 
+        if(filterList == null) {
 
             InfosAbsences absence = absList.get(position);
             String module = absence.getModule();
@@ -75,10 +65,6 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
             String prenom_prof = absence.getPrenom_prof();
             String nom_prof = absence.getNom_prof();
             String statut = absence.getStatut();
-
-            //LayoutInflater inflater = LayoutInflater.from(mContext);
-            //convertView = inflater.inflate(mResource, parent, false);
-
 
             TextView txtmodule = (TextView) convertView.findViewById(R.id.tvmodule);
             TextView txtdate = (TextView) convertView.findViewById(R.id.tvdate);
@@ -91,58 +77,53 @@ public class AbsencesListeAdapter extends BaseAdapter implements Filterable{
             txtpreprof.setText(prenom_prof);
             txtnomprof.setText(nom_prof);
             txtstatut.setText(statut);
+        }else {
+            InfosAbsences absence = filterList.get(position);
+            String module = absence.getModule();
+            String date = absence.getDate();
+            String prenom_prof = absence.getPrenom_prof();
+            String nom_prof = absence.getNom_prof();
+            String statut = absence.getStatut();
 
+            TextView txtmodule = (TextView) convertView.findViewById(R.id.tvmodule);
+            TextView txtdate = (TextView) convertView.findViewById(R.id.tvdate);
+            TextView txtpreprof = (TextView) convertView.findViewById(R.id.tvpreprof);
+            TextView txtnomprof = (TextView) convertView.findViewById(R.id.tvnomprof);
+            TextView txtstatut = (TextView) convertView.findViewById(R.id.tvstatut);
 
+            txtmodule.setText(module);
+            txtdate.setText(date);
+            txtpreprof.setText(prenom_prof);
+            txtnomprof.setText(nom_prof);
+            txtstatut.setText(statut);
+        }
         return convertView;
-
     }
 
-
-    @Override
-    public Filter getFilter() {
-        if (valueFilter == null) {
-            valueFilter = new ValueFilter();
-        }
-        return valueFilter;
-    }
-
-    private class ValueFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            if (constraint != null && constraint.length() > 0) {
-                filterList = new ArrayList<>();
-                for (int i = 0; i < size; i++) {
-                    if ((mStringFilterList.get(i).getModule().toUpperCase())
-                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getDate().toUpperCase())
-                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getNom_prof().toUpperCase())
-                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getPrenom_prof().toUpperCase())
-                            .contains(constraint.toString().toUpperCase()) || (mStringFilterList.get(i).getStatut().toUpperCase())
-                            .contains(constraint.toString().toUpperCase())) {
-
-                        InfosAbsences absence = new InfosAbsences(mStringFilterList.get(i)
-                                .getModule(), mStringFilterList.get(i)
-                                .getDate(), mStringFilterList.get(i).getPrenom_prof(), mStringFilterList.get(i).getNom_prof(), mStringFilterList.get(i).getStatut());
-                        filterList.add(absence);
-                    }
+    public void getFilter(String message) {
+        if (message != null && message.length() != 0) {
+            filterList = new ArrayList<>();
+            filterList.clear();
+            for (int i = 0; i < absList.size(); i++) {
+                if ((absList.get(i).getModule().toUpperCase())
+                        .contains(message.toString().toUpperCase()) || (absList.get(i).getDate().toUpperCase())
+                        .contains(message.toString().toUpperCase()) || (absList.get(i).getNom_prof().toUpperCase())
+                        .contains(message.toString().toUpperCase()) || (absList.get(i).getPrenom_prof().toUpperCase())
+                        .contains(message.toString().toUpperCase()) || (absList.get(i).getStatut().toUpperCase())
+                        .contains(message.toString().toUpperCase())) {
+                    InfosAbsences absence = new InfosAbsences(absList.get(i).getModule(), absList.get(i).getDate(), absList.get(i).getPrenom_prof(),
+                            absList.get(i).getNom_prof(), absList.get(i).getStatut());
+                    filterList.add(absence);
                 }
-                results.count = filterList.size();
-                results.values = filterList;
-            } else {
-                results.count = size;
-                results.values = mStringFilterList;
             }
-            return results;
-
+        } else {
+            filterList = absList;
         }
-
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-            absList = (ArrayList<InfosAbsences>) results.values;
-            notifyDataSetChanged();
-        }
-
     }
+
+    public void getUnfilter(){
+        filterList.clear();
+        filterList = absList;
+    }
+
 }

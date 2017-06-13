@@ -50,7 +50,7 @@ import java.util.Set;
  * Created by lucie on 22/05/2017.
  */
 
-public class TotalsAbsences extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchView.OnQueryTextListener {
+public class TotalsAbsences extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
@@ -58,19 +58,21 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
     private ListView mListView;
     private String userInfos;
     private String token;
-    private SearchView theFilter;
     private ArrayList<InfosAbsences> infos;
     private InfosAbsences absence;
     private AbsencesListeAdapter adapter;
+    private EditText recherche;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.totals_absences);
+
         mListView = (ListView) findViewById(R.id.listView);
         token = getIntent().getStringExtra("token");
-        theFilter = (SearchView) findViewById(R.id.searchFilter);
+        recherche = (EditText) findViewById(R.id.filtre);
+
         Log.d(TAG, "OnCreate : started. ");
         Button button = (Button) findViewById(R.id.buttonStatsAbs);
         button.setOnClickListener(this);
@@ -104,8 +106,6 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
 
                         infos = new ArrayList<>();
 
-                    //    ArrayList<InfosAbsences> infos = new ArrayList<>();
-                     //   ArrayList<String> infosString = new ArrayList<>();
 
 
                         if(mJsonArray.length() == 0){
@@ -114,8 +114,6 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                 String cours = jsonCours.toString();
                                 Object jsonHeureD = mJsonInfos.get("heure_debut");
                                 String heureD = jsonHeureD.toString();
-//                                Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
-//                                String heureF = jsonHeureF.toString();
                                 Object jsonNomP = mJsonInfos.get("nom_prof");
                                 String nomP = jsonNomP.toString();
                                 Object jsonPrenomP = mJsonInfos.get("prenom_prof");
@@ -125,7 +123,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                 absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
                                 infos.add(absence);
 
-                                adapter = new AbsencesListeAdapter(getApplicationContext(), infos, infos.size()); // R.layout/affichage_absence
+                                adapter = new AbsencesListeAdapter(getApplicationContext(), infos);
                                 mListView.setAdapter(adapter);
 
                             } catch( JSONException e){
@@ -140,8 +138,6 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                     String cours = jsonCours.toString();
                                     Object jsonHeureD = mJsonArray.getJSONObject(i).get("heure_debut");
                                     String heureD = jsonHeureD.toString();
-//                                Object jsonHeureF = mJsonArray.getJSONObject(i).get("heure_fin");
-//                                String heureF = jsonHeureF.toString();
                                     Object jsonNomP = mJsonArray.getJSONObject(i).get("nom_prof");
                                     String nomP = jsonNomP.toString();
                                     Object jsonPrenomP = mJsonArray.getJSONObject(i).get("prenom_prof");
@@ -150,10 +146,9 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                                     String statut = jsonStatut.toString();
                                     absence = new InfosAbsences(cours, heureD, prenomP, nomP, statut);
                                     infos.add(absence);
-                                    //infosString.add(cours);
                                 }
 
-                                adapter = new AbsencesListeAdapter(getApplicationContext(),infos, infos.size());
+                                adapter = new AbsencesListeAdapter(getApplicationContext(),infos);
                                 mListView.setAdapter(adapter);
 
 
@@ -167,8 +162,6 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        System.out.println(error.toString());
-                        System.out.println("RatéRaté");
                     }
                 });
 
@@ -185,39 +178,22 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
-        theFilter.setOnQueryTextListener(this);
 
-
-        //mListView.setTextFilterEnabled(true);
-
-        //theFilter.setOnQueryTextListener((OnQueryTextListener) this);
-
-        /*new SearchView.OnQueryTextListener() {
-
-           @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                    adapter.getFilter().filter(newText);
-                return false;
-            }
-        });*/
 
     }
 
-    //@Override
-    public boolean onQueryTextSubmit(String s) {
-        adapter.getFilter().filter(s);
-        return false;
+    public void onClickFilter(View v){
+            adapter.getFilter(recherche.getText().toString());
+            mListView.setAdapter(adapter);
+
     }
 
-    //@Override
-    public boolean onQueryTextChange(String s) {
-        return false;
+    public void onClickUnfilter(View v){
+        recherche.setText(null);
+        adapter.getUnfilter();
+        mListView.setAdapter(adapter);
     }
+
 
     @Override
     public void onBackPressed() {
