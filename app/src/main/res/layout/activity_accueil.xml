@@ -11,20 +11,31 @@
     android:fitsSystemWindows="true">
 
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/accueil"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".AccueilActivity">
 
-        <TextView
-            android:id="@+id/textBienvenue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/bienvenue"
-            android:textSize="24sp" />
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphNbrEleves"
+            android:layout_width="1250dp"
+            android:layout_height="320dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="7dp" />
 
-    </FrameLayout>
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphNbrAbsences"
+            android:layout_width="1250dp"
+            android:layout_height="320dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="334dp" />
+
+        </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -32,7 +43,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#cad9ff"
-        android:paddingTop="88dp"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/navigation_menu" />

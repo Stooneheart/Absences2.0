@@ -30,10 +30,10 @@
 
         <com.jjoe64.graphview.GraphView
             android:id="@+id/graph"
-            android:layout_width="1150dp"
-            android:layout_height="530dp"
-            android:layout_marginLeft="65dp"
-            android:layout_marginStart="65dp"
+            android:layout_width="1250dp"
+            android:layout_height="560dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="100dp" />
 
         <Button
@@ -66,7 +66,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:paddingTop="88dp"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/navigation_menu" />

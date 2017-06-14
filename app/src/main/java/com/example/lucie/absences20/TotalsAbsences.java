@@ -1,6 +1,7 @@
 package com.example.lucie.absences20;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,8 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.text.Editable;
@@ -78,7 +83,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         button.setOnClickListener(this);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/absences.php?token=" + token;
+        String url ="http://www.absencesepf.fr/api/absences.php?token=" + token;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -179,19 +184,26 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         navigationView.setNavigationItemSelectedListener(this);
         userInfos = getIntent().getStringExtra("user");
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
     }
 
     public void onClickFilter(View v){
-            adapter.getFilter(recherche.getText().toString());
-            mListView.setAdapter(adapter);
+        adapter.getFilter(recherche.getText().toString());
+        mListView.setAdapter(adapter);
 
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.totals_absences);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
     }
 
     public void onClickUnfilter(View v){
         recherche.setText(null);
         adapter.getUnfilter();
         mListView.setAdapter(adapter);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.absences_prom);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
     }
 
 
@@ -238,6 +250,18 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                 e.printStackTrace();
             }
 
+        } else if (id == R.id.dashboard) {
+            try {
+                JSONObject jsonObject = new JSONObject(userInfos);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
+                intent3.putExtra("user", jsonObject.toString());
+                intent3.putExtra("token", token);
+                this.finish();
+                this.startActivity(intent3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         } else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -250,35 +274,12 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
-            try{
-            JSONObject jsonObject = new JSONObject(userInfos);
-            Intent intent3 = new Intent(this, AccueilActivity.class);
-            intent3.putExtra("user", jsonObject.toString());
-            this.finish();
-            this.startActivity(intent3);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
             TotalsAbsences.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        } else if (id == R.id.absences_direct) {
+        }  else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
                 Intent intent3 = new Intent(this, AbsencesDirect.class);

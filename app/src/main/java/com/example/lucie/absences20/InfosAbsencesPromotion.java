@@ -23,11 +23,14 @@ public class InfosAbsencesPromotion extends AppCompatActivity {
     public InfosAbsencesPromotion(String id, String module, String date, String prenom_eleve, String nom_eleve, String prenom_prof, String nom_prof, String statut) {
         this.id = id;
         this.module = module;
-        //date = date.substring(0, date.length()-9);
-        //Date dateSql = Date.valueOf(date);
-        //DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
-        //this.date = df.getDateInstance().format(dateSql);
-        this.date = date;
+        if (date.length() > 15) {
+            date = date.substring(0, date.length()-9);
+            Date dateSql = Date.valueOf(date);
+            DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
+            this.date = df.getDateInstance().format(dateSql);
+        }
+        else
+            this.date = date;
         this.prenom_eleve = prenom_eleve;
         this.nom_eleve = nom_eleve;
         this.prenom_prof = prenom_prof;
@@ -37,11 +40,14 @@ public class InfosAbsencesPromotion extends AppCompatActivity {
 
     public InfosAbsencesPromotion(String module, String date, String prenom_eleve, String nom_eleve, String prenom_prof, String nom_prof, String statut) {
         this.module = module;
-        //date = date.substring(0, date.length()-9);
-        //Date dateSql = Date.valueOf(date);
-        //DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
-        //this.date = df.getDateInstance().format(dateSql);
-        this.date = date;
+        if (date.length() > 15) {
+            date = date.substring(0, date.length()-9);
+            Date dateSql = Date.valueOf(date);
+            DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
+            this.date = df.getDateInstance().format(dateSql);
+        }
+        else
+            this.date = date;
         this.prenom_eleve = prenom_eleve;
         this.nom_eleve = nom_eleve;
         this.prenom_prof = prenom_prof;

@@ -79,5 +79,6 @@
         <item>exclu</item>
     </string-array>
     <string name="absences_direct">LIVE absences</string>
+    <string name="tableau_de_bord">Dashboard</string>
 
 </resources>

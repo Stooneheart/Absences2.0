@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="17"
         android:text=""
+        android:textColor="@android:color/black"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:text=""
+        android:textColor="@android:color/black"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="21"
         android:text=""
+        android:textColor="@android:color/black"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -40,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="21"
         android:text=""
+        android:textColor="@android:color/black"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -49,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="21"
         android:text=""
+        android:textColor="@android:color/black"
         android:textAlignment="center"
         android:textSize="24sp" />
 </LinearLayout>

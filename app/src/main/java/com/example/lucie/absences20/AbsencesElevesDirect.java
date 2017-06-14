@@ -146,10 +146,10 @@ public class AbsencesElevesDirect extends AppCompatActivity implements View.OnCl
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.mes_statistiques) {
+        } else if (id == R.id.dashboard) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, MesStatistiques.class);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -158,10 +158,10 @@ public class AbsencesElevesDirect extends AppCompatActivity implements View.OnCl
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
+        }  else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -175,18 +175,6 @@ public class AbsencesElevesDirect extends AppCompatActivity implements View.OnCl
             Intent intent = new Intent(this,MainActivity.class);
             AbsencesElevesDirect.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                intent3.putExtra("token", token);
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -277,7 +265,7 @@ public class AbsencesElevesDirect extends AppCompatActivity implements View.OnCl
     public void AfficherElevesPresentsAbsents (String id){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/eleves_direct.php?token=" + token + "&id=" + id;
+        String url ="http://www.absencesepf.fr/api/eleves_direct.php?token=" + token + "&id=" + id;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {

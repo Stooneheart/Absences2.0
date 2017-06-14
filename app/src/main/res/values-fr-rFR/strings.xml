@@ -37,8 +37,8 @@
     <string name="cours">Cours</string>
     <string name="cours_de">Cours de :</string>
     <string name="date">Date</string>
-    <string name="heure_debut">Hour de début</string>
-    <string name="heure_fin">Hour de fin</string>
+    <string name="heure_debut">Heure de début</string>
+    <string name="heure_fin">Heure de fin</string>
     <string name="layout_absences_en_direct">Choisissez le cours à afficher en direct :</string>
     <string name="layout_absences_par_promotion">Affichage absences promotion :</string>
     <string name="layout_choix_promotion">Choisissez la promotion à afficher :</string>
@@ -65,4 +65,5 @@
     <string name="recherche">Recherche</string>
     <string name="filtrer">Filtrer</string>
     <string name="defiltrer">Défiltrer</string>
+    <string name="tableau_de_bord">Tableau de bord</string>
 </resources>

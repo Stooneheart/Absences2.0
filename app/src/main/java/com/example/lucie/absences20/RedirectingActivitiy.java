@@ -28,7 +28,7 @@ public class RedirectingActivitiy extends AppCompatActivity {
 
         token = getIntent().getStringExtra("token");
         token = token.substring(1,token.length()-1);
-        String url = "http://10.0.2.2/api/utilisateur.php?token="+token;
+        String url = "http://www.absencesepf.fr/api/utilisateur.php?token="+token;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         intent = new Intent(this, AccueilActivity.class);
         StringRequest jsObjReq = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -66,7 +66,7 @@ public class RedirectingActivitiy extends AppCompatActivity {
             intent.putExtra("user", jsonObject.toString());
             intent.putExtra("token", token);
         } else if(type.equals("3")){
-            intent = new Intent(this, AbsencesDirect.class);
+            intent = new Intent(this, AccueilActivity.class);
             intent.putExtra("user", jsonObject.toString());
             intent.putExtra("token", token);
         } else if(type.equals("4")){

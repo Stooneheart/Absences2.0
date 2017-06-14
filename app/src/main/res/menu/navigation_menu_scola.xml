@@ -5,6 +5,11 @@
     <item android:title="@string/Fonctions">
         <menu>
             <item
+                android:id="@+id/dashboard"
+                android:icon="@mipmap/ic_dashboard_black_24dp"
+                android:title="@string/tableau_de_bord" />
+
+            <item
                 android:id="@+id/absences_promotion"
                 android:title="@string/absences_promo"
                 android:icon="@mipmap/ic_group_black_24dp"/>
@@ -17,22 +22,17 @@
             <item
                 android:id="@+id/absence_profs"
                 android:title="@string/absences_professeurs"
-                android:icon="@mipmap/ic_clear_black_24dp"/>
+                android:icon="@mipmap/ic_pan_tool_black_24dp"/>
 
             <item
                 android:id="@+id/absences_direct"
-                android:icon="@mipmap/ic_pan_tool_black_24dp"
+                android:icon="@mipmap/ic_remove_red_eye_black_24dp"
                 android:title="@string/absences_direct" />
 
             <item
                 android:id="@+id/alertes"
                 android:icon="@mipmap/ic_notifications_black_24dp"
                 android:title="@string/alertes" />
-
-            <item
-                android:id="@+id/absences_anticipees"
-                android:icon="@mipmap/ic_contact_mail_black_24dp"
-                android:title="@string/absences_anticipes" />
         </menu>
     </item>
     <item android:title="@string/Autres">

@@ -100,10 +100,10 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.mes_statistiques) {
+        } else if (id == R.id.dashboard) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, MesStatistiques.class);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -112,10 +112,10 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
+        } else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -129,18 +129,6 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
             Intent intent = new Intent(this,MainActivity.class);
             Alertes.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                intent3.putExtra("token", token);
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);

@@ -1,6 +1,7 @@
 package com.example.lucie.absences20;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,11 +17,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,6 +113,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
 
@@ -157,10 +162,10 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.mes_statistiques) {
+        } else if (id == R.id.dashboard) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, MesStatistiques.class);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -169,10 +174,10 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
+        } else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -186,18 +191,6 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
             Intent intent = new Intent(this,MainActivity.class);
             AbsencesPromotion.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                intent3.putExtra("token", token);
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -288,7 +281,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
     public void AfficherAbsencePromo (String id){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/absences_promotion.php?id=" + id + "&token=" + token;
+        String url ="http://www.absencesepf.fr/api/absences_promotion.php?id=" + id + "&token=" + token;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -459,7 +452,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                 String idPromo = idPromos[Integer.valueOf(idSelection)];
                 AfficherAbsencePromo(idPromo);
                 dialogCreate.dismiss();
-                Toast toast = Toast.makeText(getApplicationContext(), "Suppression effectuée avec succès !", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getApplicationContext(), "Suppression effectuée avec succès ! La mise à jour des données peut parfois prendre 2 minutes", Toast.LENGTH_LONG);
                 toast.show();
 
             }
@@ -473,7 +466,7 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
                 String idPromo = idPromos[Integer.valueOf(idSelection)];
                 AfficherAbsencePromo(idPromo);
                 dialogCreate.dismiss();
-                Toast toast = Toast.makeText(getApplicationContext(), "Modification effectuée avec succès !", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getApplicationContext(), "Modification effectuée avec succès ! La mise à jour des données peut parfois prendre 2 minutes", Toast.LENGTH_LONG);
                 toast.show();
             }
         });
@@ -489,6 +482,9 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
     public void onClickFilterPromo(View v){
         adapter.getFilter(recherchePromo.getText().toString());
         mListView.setAdapter(adapter);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.absences_prom);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
     }
 
@@ -496,12 +492,15 @@ public class AbsencesPromotion extends AppCompatActivity implements NavigationVi
         recherchePromo.setText(null);
         adapter.getUnfilter();
         mListView.setAdapter(adapter);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.absences_prom);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
     }
 
     public void ModifierStatut (String id, String statut){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/statut.php?token=" + token +"&statut=" + statut +"&id=" + id;
+        String url ="http://www.absencesepf.fr/api/statut.php?token=" + token +"&statut=" + statut +"&id=" + id;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {

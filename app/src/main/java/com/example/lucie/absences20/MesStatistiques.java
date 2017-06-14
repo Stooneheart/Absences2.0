@@ -114,34 +114,11 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
             Intent intent3 = new Intent(this, MesStatistiques.class);
             intent3.putExtra("user", userInfos);
             startActivity(intent3);
-        } else if (id == R.id.prevenir_absence) {
-            try{
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AccueilActivity.class);
-
-                intent3.putExtra("user", jsonObject.toString());
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.deconnexion) {
 
             Intent intent = new Intent(this,MainActivity.class);
             MesStatistiques.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -216,7 +193,7 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
     public void StatsRequete (){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/absences.php?token=" + token;
+        String url ="http://www.absencesepf.fr/api/absences.php?token=" + token;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -276,7 +253,7 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
                         for (String info : infosNonDup){
                             int occurence = Collections.frequency(infos, info);
                             datas[infosNonDup.indexOf(info)+1] = new DataPoint(infosNonDup.indexOf(info)+1,occurence);
-                            datasName[infosNonDup.indexOf(info)+1] = info;
+                            datasName[infosNonDup.indexOf(info)+1] = info.replace(" ", "\n");
                         }
 
                         datas[infosNonDup.size()+1] = new DataPoint(infosNonDup.size()+1, 0);
@@ -295,19 +272,21 @@ public class MesStatistiques extends AppCompatActivity implements NavigationView
                             }
                         });
 
-                        series.setSpacing(20);
+                        series.setSpacing(50);
 
 // draw values on top
-                      //  series.setDrawValuesOnTop(true);
-                      //  series.setValuesOnTopColor(Color.BLACK);
-                      //  series.setValuesOnTopSize(40);
+                        series.setDrawValuesOnTop(true);
+                        series.setValuesOnTopColor(Color.BLACK);
+                        series.setValuesOnTopSize(15);
 
                         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
                         staticLabelsFormatter.setHorizontalLabels(datasName);
                         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                        graph.getGridLabelRenderer().setLabelHorizontalHeight(80);
+                        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
 
                         graph.setTitle("Répartition des absences par matière de " + nomPrenom);
-                        graph.setTitleTextSize(50);
+                        graph.setTitleTextSize(25);
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'absences");
 
                     }

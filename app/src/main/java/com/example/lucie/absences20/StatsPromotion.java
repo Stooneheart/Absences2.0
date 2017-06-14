@@ -157,10 +157,10 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.mes_statistiques) {
+        } else if (id == R.id.dashboard) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, MesStatistiques.class);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -169,10 +169,10 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
+        } else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -186,18 +186,6 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
             Intent intent = new Intent(this,MainActivity.class);
             StatsPromotion.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                intent3.putExtra("token", token);
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -340,7 +328,7 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
     public void StatsRequete (String id){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/matieres.php?token=" + token + "&id=" + id;
+        String url ="http://www.absencesepf.fr/api/matieres.php?token=" + token + "&id=" + id;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -401,7 +389,7 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
                         datasName[0] = "";
                         for (InfosStatsPromo info : infos){
                             datas[infos.indexOf(info)+1] = new DataPoint(infos.indexOf(info)+1,Integer.valueOf(info.getNbr()));
-                            datasName[infos.indexOf(info)+1] = info.getNom();
+                            datasName[infos.indexOf(info)+1] = info.getNom().replace(" ", "\n");
                         }
 
                         datas[infos.size()+1] = new DataPoint(infos.size()+1,0);
@@ -423,16 +411,18 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
                         series.setSpacing(50);
 
 // draw values on top
-                      //  series.setDrawValuesOnTop(true);
-                      //  series.setValuesOnTopColor(Color.BLACK);
-                      //  series.setValuesOnTopSize(40);
+                        series.setDrawValuesOnTop(true);
+                        series.setValuesOnTopColor(Color.BLACK);
+                        series.setValuesOnTopSize(15);
 
                         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
                         staticLabelsFormatter.setHorizontalLabels(datasName);
                         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                        graph.getGridLabelRenderer().setLabelHorizontalHeight(80);
+                        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
 
-                        graph.setTitle("Répartition des absences de la promotion " + promoName + " par matière");
-                        graph.setTitleTextSize(50);
+                        graph.setTitle("Répartition des absences par matière de la promotion : " + promoName);
+                        graph.setTitleTextSize(25);
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'absences");
 
                     }

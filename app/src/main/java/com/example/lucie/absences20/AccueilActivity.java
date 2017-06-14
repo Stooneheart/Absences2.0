@@ -1,6 +1,7 @@
 package com.example.lucie.absences20;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
@@ -22,11 +23,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 
 public class AccueilActivity extends AppCompatActivity
@@ -34,7 +42,6 @@ public class AccueilActivity extends AppCompatActivity
 
     NavigationView navigationView = null;
     ActionBarDrawerToggle toggle;
-    private String nomPrenom;
     private int userType;
     private String token;
 
@@ -54,7 +61,6 @@ public class AccueilActivity extends AppCompatActivity
         userType = 0;
         try {
             JSONObject jsonObject = new JSONObject(userInfos);
-            nomPrenom = jsonObject.get("prenom") + " " + jsonObject.getString("nom").toUpperCase();
             userType = jsonObject.getInt("type");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -70,8 +76,7 @@ public class AccueilActivity extends AppCompatActivity
         }
 
         navigationView.setNavigationItemSelectedListener(this);
-        TextView bienvenue = (TextView) findViewById(R.id.textBienvenue);
-        bienvenue.setText(bienvenue.getText() + " " + nomPrenom);
+        AfficherDashboard();
     }
 
     @Override
@@ -118,10 +123,10 @@ public class AccueilActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.mes_statistiques) {
+        } else if (id == R.id.dashboard) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, MesStatistiques.class);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -130,10 +135,10 @@ public class AccueilActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
+        } else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -147,18 +152,6 @@ public class AccueilActivity extends AppCompatActivity
             Intent intent = new Intent(this,MainActivity.class);
             AccueilActivity.this.finish();
             startActivity(intent);
-
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                intent3.putExtra("token", token);
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
         } else if (id == R.id.absences_direct) {
             try {
@@ -225,7 +218,6 @@ public class AccueilActivity extends AppCompatActivity
 
         }
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -249,5 +241,170 @@ public class AccueilActivity extends AppCompatActivity
 
     public String getUserInfos() {
         return userInfos;
+    }
+
+    public void AfficherDashboard(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://www.absencesepf.fr/api/promotions.php?token=" + token;
+
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("Réussiréussi");
+                        JSONObject mJsonInfos = new JSONObject();
+                        JSONArray mJsonArray = new JSONArray();
+                        try {
+                            mJsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        ArrayList<InfosDashBoardAbsences> infosAbs = new ArrayList<>();
+                        ArrayList<InfosDashBoardEleves> infosEleves = new ArrayList<>();
+
+                        if(mJsonArray.length() == 0){
+                            try {
+                                Object jsonNbrEleves = mJsonInfos.get("nombre_eleves");
+                                String eleve = jsonNbrEleves.toString();
+                                Object jsonNbrAbs = mJsonInfos.get("nombre_absences");
+                                String abs = jsonNbrAbs.toString();
+                                Object jsonPromo = mJsonInfos.get("promotion");
+                                String promo = jsonPromo.toString();
+                                InfosDashBoardAbsences labsence = new InfosDashBoardAbsences(abs,promo);
+                                InfosDashBoardEleves leleve = new InfosDashBoardEleves(eleve, promo);
+                                infosAbs.add(labsence);
+                                infosEleves.add(leleve);
+                            } catch( JSONException e){
+                                e.printStackTrace();
+                            }
+                        } else {
+
+                            try {
+
+                                for (int i = 0; i < mJsonArray.length(); i++) {
+                                    Object jsonNbrEleves = mJsonArray.getJSONObject(i).get("nombre_eleves");
+                                    String eleve = jsonNbrEleves.toString();
+                                    Object jsonNbrAbs = mJsonArray.getJSONObject(i).get("nombre_absences");
+                                    String abs = jsonNbrAbs.toString();
+                                    Object jsonPromo = mJsonArray.getJSONObject(i).get("promotion");
+                                    String promo = jsonPromo.toString();
+                                    InfosDashBoardAbsences labsence = new InfosDashBoardAbsences(abs,promo);
+                                    InfosDashBoardEleves leleve = new InfosDashBoardEleves(eleve, promo);
+                                    infosAbs.add(labsence);
+                                    infosEleves.add(leleve);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        ///////////// NOMBRE D ELEVES /////////////////
+                        DataPoint[] datas = new DataPoint[infosEleves.size()+2];
+                        String[] datasName = new String[infosEleves.size()+2];
+                        datas[0] = new DataPoint(0, 0);
+                        datasName[0] = "";
+                        for (InfosDashBoardEleves info : infosEleves){
+                            datas[infosEleves.indexOf(info)+1] = new DataPoint(infosEleves.indexOf(info)+1,Integer.valueOf(info.getNbrEleves()));
+                            datasName[infosEleves.indexOf(info)+1] = info.getPromo();
+                        }
+
+                        datas[infosEleves.size()+1] = new DataPoint(infosEleves.size()+1,0);
+                        datasName[infosEleves.size()+1] = "";
+
+                        GraphView graph = (GraphView) findViewById(R.id.graphNbrEleves);
+                        graph.removeAllSeries();
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(datas);
+                        graph.addSeries(series);
+
+// styling
+                        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                            @Override
+                            public int get(DataPoint data) {
+                                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+                            }
+                        });
+
+                        series.setSpacing(50);
+
+// draw values on top
+                        series.setDrawValuesOnTop(true);
+                        series.setValuesOnTopColor(Color.BLACK);
+                        series.setValuesOnTopSize(15);
+
+                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+                        staticLabelsFormatter.setHorizontalLabels(datasName);
+                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
+
+                        graph.setTitle("Répartition du nombre d'élèves par promotion : ");
+                        graph.setTitleTextSize(25);
+                        graph.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'élèves");
+
+                        ///////////// NOMBRE D ABSENCES /////////////////
+                        DataPoint[] datasAbs = new DataPoint[infosAbs.size()+2];
+                        String[] datasPromos = new String[infosAbs.size()+2];
+                        datasAbs[0] = new DataPoint(0, 0);
+                        datasPromos[0] = "";
+                        for (InfosDashBoardAbsences info : infosAbs){
+                            datasAbs[infosAbs.indexOf(info)+1] = new DataPoint(infosAbs.indexOf(info)+1,Integer.valueOf(info.getnbrAbs()));
+                            datasPromos[infosAbs.indexOf(info)+1] = info.getPromo();
+                        }
+
+                        datasAbs[infosAbs.size()+1] = new DataPoint(infosAbs.size()+1,0);
+                        datasPromos[infosAbs.size()+1] = "";
+
+                        GraphView graphAbs = (GraphView) findViewById(R.id.graphNbrAbsences);
+                        graphAbs.removeAllSeries();
+                        BarGraphSeries<DataPoint> seriesAbs = new BarGraphSeries<>(datasAbs);
+                        graphAbs.addSeries(seriesAbs);
+
+// styling
+                        seriesAbs.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                            @Override
+                            public int get(DataPoint data) {
+                                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+                            }
+                        });
+
+                        seriesAbs.setSpacing(50);
+
+// draw values on top
+                        seriesAbs.setDrawValuesOnTop(true);
+                        seriesAbs.setValuesOnTopColor(Color.BLACK);
+                        seriesAbs.setValuesOnTopSize(15);
+
+                        StaticLabelsFormatter staticLabelsFormatterAbs = new StaticLabelsFormatter(graphAbs);
+                        staticLabelsFormatterAbs.setHorizontalLabels(datasPromos);
+                        graphAbs.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatterAbs);
+                        graphAbs.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
+
+                        graphAbs.setTitle("Répartition du nombre d'absences par promotion : ");
+                        graphAbs.setTitleTextSize(25);
+                        graphAbs.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'absences");
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        System.out.println(error.toString());
+                        System.out.println("RatéRaté");
+                    }
+                });
+
+
+        queue.add(jsObjRequest);
     }
 }

@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         message = String.format(res.getString(R.string.WPassword));
         wrongPassword = (TextView) findViewById(R.id.tvStatsEleve);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     public void login(View view) {
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         String usname = username.getText().toString();
         String pword = password.getText().toString();
         queue1 = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2/api/token.php?identifiant=" + usname + "&pw=" + pword;
+        String url = "http://www.absencesepf.fr/api/token.php?identifiant=" + usname + "&pw=" + pword;
         intent = new Intent(this, RedirectingActivitiy.class);
 
         StringRequest jsObjRequest = new StringRequest

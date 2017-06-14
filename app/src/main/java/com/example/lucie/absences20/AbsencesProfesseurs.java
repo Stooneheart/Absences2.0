@@ -1,5 +1,6 @@
 package com.example.lucie.absences20;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,9 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -70,13 +75,14 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
         if (userType == 3) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.navigation_menu_scola);
-            AfficherAbsenceProf();
         } else if (userType == 4) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.navigation_menu_respos);
         }
 
         navigationView.setNavigationItemSelectedListener(this);
+        AfficherAbsenceProf();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
@@ -123,10 +129,10 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.mes_statistiques) {
+        } else if (id == R.id.dashboard) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, MesStatistiques.class);
+                Intent intent3 = new Intent(this, AccueilActivity.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -135,10 +141,10 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
                 e.printStackTrace();
             }
 
-        } else if (id == R.id.prevenir_absence) {
+        }  else if (id == R.id.mes_statistiques) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, PrevenirAbsence.class);
+                Intent intent3 = new Intent(this, MesStatistiques.class);
                 intent3.putExtra("user", jsonObject.toString());
                 intent3.putExtra("token", token);
                 this.finish();
@@ -152,18 +158,6 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
             Intent intent = new Intent(this,MainActivity.class);
             AbsencesProfesseurs.this.finish();
             startActivity(intent);
-        } else if (id == R.id.absences_anticipees) {
-            try {
-                JSONObject jsonObject = new JSONObject(userInfos);
-                Intent intent3 = new Intent(this, AbsencesAnticipees.class);
-                intent3.putExtra("user", jsonObject.toString());
-                intent3.putExtra("token", token);
-                this.finish();
-                this.startActivity(intent3);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         } else if (id == R.id.absences_direct) {
             try {
                 JSONObject jsonObject = new JSONObject(userInfos);
@@ -256,7 +250,7 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
     public void AfficherAbsenceProf (){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.0.2.2/api/professeurs.php?token=" + token;
+        String url ="http://www.absencesepf.fr/api/professeurs.php?token=" + token;
 
         StringRequest jsObjRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -270,11 +264,14 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        try {
 
-                            mJsonInfos = new JSONObject(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if(mJsonArray.length() ==0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         infos = new ArrayList<>();
@@ -285,9 +282,9 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
                                 String cours = jsonCours.toString();
                                 Object jsonHeureD = mJsonInfos.get("heure_debut");
                                 String heureD = jsonHeureD.toString();
-                                Object jsonNomP = mJsonInfos.get("nom_professeur");
+                                Object jsonNomP = mJsonInfos.get("nom");
                                 String nomP = jsonNomP.toString();
-                                Object jsonPrenomP = mJsonInfos.get("prenom_professeur");
+                                Object jsonPrenomP = mJsonInfos.get("prenom");
                                 String prenomP = jsonPrenomP.toString();
                                 Object jsonStatut = mJsonInfos.get("statut");
                                 String statut = jsonStatut.toString();
@@ -308,9 +305,9 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
                                     String cours = jsonCours.toString();
                                     Object jsonHeureD = mJsonArray.getJSONObject(i).get("heure_debut");
                                     String heureD = jsonHeureD.toString();
-                                    Object jsonNomP = mJsonArray.getJSONObject(i).get("nom_professeur");
+                                    Object jsonNomP = mJsonArray.getJSONObject(i).get("nom");
                                     String nomP = jsonNomP.toString();
-                                    Object jsonPrenomP = mJsonArray.getJSONObject(i).get("prenom_professeur");
+                                    Object jsonPrenomP = mJsonArray.getJSONObject(i).get("prenom");
                                     String prenomP = jsonPrenomP.toString();
                                     Object jsonStatut = mJsonArray.getJSONObject(i).get("statut");
                                     String statut = jsonStatut.toString();
@@ -344,6 +341,9 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
     public void onClickFilterProf(View v){
         adapter.getFilter(rechercheProf.getText().toString());
         mListView.setAdapter(adapter);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.absences_prof);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
     }
 
@@ -351,6 +351,9 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
         rechercheProf.setText(null);
         adapter.getUnfilter();
         mListView.setAdapter(adapter);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.absences_prom);
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
     }
 
 }
