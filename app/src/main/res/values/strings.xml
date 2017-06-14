@@ -80,5 +80,12 @@
     </string-array>
     <string name="absences_direct">LIVE absences</string>
     <string name="tableau_de_bord">Dashboard</string>
+    <string name="moyenne_d_absences_par_l_ve_et_par_promotion">Moyenne d\'absences par élève et par promotion :</string>
+    <string name="nombre_d_l_ves_par_promotion">Nombre d\'élèves par promotion :</string>
+    <string name="nombre_d_absences_par_promotion">Nombre d\'absences par promotion :</string>
+    <string name="nom_compte">Login</string>
+    <string name="connexion_app">Login</string>
+    <string name="logo_epf">logo_epf</string>
+    <string name="promotion">Promotion</string>
 
 </resources>

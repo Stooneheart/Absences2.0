@@ -9,18 +9,30 @@ import android.support.v7.app.AppCompatActivity;
 public class InfosDashBoardAbsences extends AppCompatActivity {
     private String nbrAbs;
     private String promo;
+    private String moyenneAbs;
+    private String nbrEleves;
 
-    public InfosDashBoardAbsences(String nbrAbs, String promo) {
+    public InfosDashBoardAbsences(String nbrAbs, String promo, String moyenneAbs, String nbrEleves) {
         this.nbrAbs = nbrAbs;
         this.promo = promo;
+        this.moyenneAbs = moyenneAbs;
+        this.nbrEleves = nbrEleves;
     }
 
-    public String getnbrAbs() {
+    public String getNbrAbs() {
         return nbrAbs;
     }
 
-    public void setnbrAbs(String nbrAbs) {
+    public void setNbrAbs(String nbrAbs) {
         this.nbrAbs = nbrAbs;
+    }
+
+    public String getMoyenneAbs() {
+        return moyenneAbs;
+    }
+
+    public void setMoyenneAbs(String moyenneAbs) {
+        this.moyenneAbs = moyenneAbs;
     }
 
     public String getPromo() {
@@ -29,5 +41,13 @@ public class InfosDashBoardAbsences extends AppCompatActivity {
 
     public void setPromo(String promo) {
         this.promo = promo;
+    }
+
+    public String getNbrEleves() {
+        return nbrEleves;
+    }
+
+    public void setNbrEleves(String nbrEleves) {
+        this.nbrEleves = nbrEleves;
     }
 }

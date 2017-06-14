@@ -5,13 +5,25 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by lucie on 22/05/2017.
@@ -24,6 +36,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
     private String userInfos;
     private int userType;
     private String token;
+    private ListView mListView;
 
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +56,7 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        mListView = (ListView) findViewById(R.id.listViewAlertes);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (userType == 3) {
             navigationView.getMenu().clear();
@@ -54,6 +67,8 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
         }
 
         navigationView.setNavigationItemSelectedListener(this);
+        AfficherAlertes();
+
     }
 
         @Override
@@ -198,6 +213,86 @@ public class Alertes extends AppCompatActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void AfficherAlertes (){
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://www.absencesepf.fr/api/alertes.php?token=" + token;
+
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject mJsonInfos = new JSONObject();
+                        JSONArray mJsonArray = new JSONArray();
+                        try {
+                            mJsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(mJsonArray.length() == 0) {
+                            try {
+
+                                mJsonInfos = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        ArrayList<InfosAlertes> infos = new ArrayList<>();
+
+                        if(mJsonArray.length() == 0){
+                            try {
+                                Object jsonNom = mJsonInfos.get("nom");
+                                String nom = jsonNom.toString();
+                                Object jsonPrenom = mJsonInfos.get("prenom");
+                                String prenom = jsonPrenom.toString();
+                                Object jsonPromo = mJsonInfos.get("promotion");
+                                String promo = jsonPromo.toString();
+                                InfosAlertes alerte = new InfosAlertes(prenom, nom, promo);
+                                infos.add(alerte);
+
+                                AlertesListAdapter adapter = new AlertesListAdapter(getApplicationContext(), R.layout.affichage_alertes, infos);
+                                mListView.setAdapter(adapter);
+                            } catch( JSONException e){
+                                e.printStackTrace();
+                            }
+                        } else {
+
+                            try {
+
+                                for (int i = 0; i < mJsonArray.length(); i++) {
+                                    Object jsonNom = mJsonArray.getJSONObject(i).get("nom");
+                                    String nom = jsonNom.toString();
+                                    Object jsonPrenom = mJsonArray.getJSONObject(i).get("prenom");
+                                    String prenom = jsonPrenom.toString();
+                                    Object jsonPromo = mJsonArray.getJSONObject(i).get("promotion");
+                                    String promo = jsonPromo.toString();
+
+                                    InfosAlertes alerte = new InfosAlertes(prenom, nom, promo);
+                                    infos.add(alerte);
+                                }
+
+                                AlertesListAdapter adapter = new AlertesListAdapter(getApplicationContext(), R.layout.affichage_alertes, infos);
+                                mListView.setAdapter(adapter);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                    }
+                });
+
+        queue.add(jsObjRequest);
     }
 
     @Override

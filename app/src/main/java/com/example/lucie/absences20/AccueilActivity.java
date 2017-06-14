@@ -271,20 +271,18 @@ public class AccueilActivity extends AppCompatActivity
                         }
 
                         ArrayList<InfosDashBoardAbsences> infosAbs = new ArrayList<>();
-                        ArrayList<InfosDashBoardEleves> infosEleves = new ArrayList<>();
 
                         if(mJsonArray.length() == 0){
                             try {
-                                Object jsonNbrEleves = mJsonInfos.get("nombre_eleves");
+                                Object jsonNbrEleves = mJsonInfos.get("nbr");
                                 String eleve = jsonNbrEleves.toString();
-                                Object jsonNbrAbs = mJsonInfos.get("nombre_absences");
+                                Object jsonNbrAbs = mJsonInfos.get("abs");
                                 String abs = jsonNbrAbs.toString();
-                                Object jsonPromo = mJsonInfos.get("promotion");
+                                Object jsonPromo = mJsonInfos.get("nom");
                                 String promo = jsonPromo.toString();
-                                InfosDashBoardAbsences labsence = new InfosDashBoardAbsences(abs,promo);
-                                InfosDashBoardEleves leleve = new InfosDashBoardEleves(eleve, promo);
+                                String moyenne = String.valueOf(Double.valueOf(abs)/Double.valueOf(eleve));
+                                InfosDashBoardAbsences labsence = new InfosDashBoardAbsences(abs,promo,moyenne, eleve);
                                 infosAbs.add(labsence);
-                                infosEleves.add(leleve);
                             } catch( JSONException e){
                                 e.printStackTrace();
                             }
@@ -293,63 +291,20 @@ public class AccueilActivity extends AppCompatActivity
                             try {
 
                                 for (int i = 0; i < mJsonArray.length(); i++) {
-                                    Object jsonNbrEleves = mJsonArray.getJSONObject(i).get("nombre_eleves");
+                                    Object jsonNbrEleves = mJsonArray.getJSONObject(i).get("nbr");
                                     String eleve = jsonNbrEleves.toString();
-                                    Object jsonNbrAbs = mJsonArray.getJSONObject(i).get("nombre_absences");
+                                    Object jsonNbrAbs = mJsonArray.getJSONObject(i).get("abs");
                                     String abs = jsonNbrAbs.toString();
-                                    Object jsonPromo = mJsonArray.getJSONObject(i).get("promotion");
+                                    Object jsonPromo = mJsonArray.getJSONObject(i).get("nom");
                                     String promo = jsonPromo.toString();
-                                    InfosDashBoardAbsences labsence = new InfosDashBoardAbsences(abs,promo);
-                                    InfosDashBoardEleves leleve = new InfosDashBoardEleves(eleve, promo);
+                                    String moyenne = String.valueOf(Double.valueOf(abs)/Double.valueOf(eleve));
+                                    InfosDashBoardAbsences labsence = new InfosDashBoardAbsences(abs,promo, moyenne, eleve);
                                     infosAbs.add(labsence);
-                                    infosEleves.add(leleve);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-
-                        ///////////// NOMBRE D ELEVES /////////////////
-                        DataPoint[] datas = new DataPoint[infosEleves.size()+2];
-                        String[] datasName = new String[infosEleves.size()+2];
-                        datas[0] = new DataPoint(0, 0);
-                        datasName[0] = "";
-                        for (InfosDashBoardEleves info : infosEleves){
-                            datas[infosEleves.indexOf(info)+1] = new DataPoint(infosEleves.indexOf(info)+1,Integer.valueOf(info.getNbrEleves()));
-                            datasName[infosEleves.indexOf(info)+1] = info.getPromo();
-                        }
-
-                        datas[infosEleves.size()+1] = new DataPoint(infosEleves.size()+1,0);
-                        datasName[infosEleves.size()+1] = "";
-
-                        GraphView graph = (GraphView) findViewById(R.id.graphNbrEleves);
-                        graph.removeAllSeries();
-                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(datas);
-                        graph.addSeries(series);
-
-// styling
-                        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-                            @Override
-                            public int get(DataPoint data) {
-                                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-                            }
-                        });
-
-                        series.setSpacing(50);
-
-// draw values on top
-                        series.setDrawValuesOnTop(true);
-                        series.setValuesOnTopColor(Color.BLACK);
-                        series.setValuesOnTopSize(15);
-
-                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-                        staticLabelsFormatter.setHorizontalLabels(datasName);
-                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-                        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
-
-                        graph.setTitle("Répartition du nombre d'élèves par promotion : ");
-                        graph.setTitleTextSize(25);
-                        graph.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'élèves");
 
                         ///////////// NOMBRE D ABSENCES /////////////////
                         DataPoint[] datasAbs = new DataPoint[infosAbs.size()+2];
@@ -357,7 +312,7 @@ public class AccueilActivity extends AppCompatActivity
                         datasAbs[0] = new DataPoint(0, 0);
                         datasPromos[0] = "";
                         for (InfosDashBoardAbsences info : infosAbs){
-                            datasAbs[infosAbs.indexOf(info)+1] = new DataPoint(infosAbs.indexOf(info)+1,Integer.valueOf(info.getnbrAbs()));
+                            datasAbs[infosAbs.indexOf(info)+1] = new DataPoint(infosAbs.indexOf(info)+1,Double.valueOf(info.getMoyenneAbs()));
                             datasPromos[infosAbs.indexOf(info)+1] = info.getPromo();
                         }
 
@@ -382,16 +337,30 @@ public class AccueilActivity extends AppCompatActivity
 // draw values on top
                         seriesAbs.setDrawValuesOnTop(true);
                         seriesAbs.setValuesOnTopColor(Color.BLACK);
-                        seriesAbs.setValuesOnTopSize(15);
+                        seriesAbs.setValuesOnTopSize(20);
 
                         StaticLabelsFormatter staticLabelsFormatterAbs = new StaticLabelsFormatter(graphAbs);
                         staticLabelsFormatterAbs.setHorizontalLabels(datasPromos);
                         graphAbs.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatterAbs);
-                        graphAbs.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
+                        graphAbs.getGridLabelRenderer().setVerticalAxisTitleTextSize(20);
+                        graphAbs.getGridLabelRenderer().setHorizontalAxisTitleTextSize(25);
 
-                        graphAbs.setTitle("Répartition du nombre d'absences par promotion : ");
-                        graphAbs.setTitleTextSize(25);
-                        graphAbs.getGridLabelRenderer().setVerticalAxisTitle("Nombre d'absences");
+                        graphAbs.setTitle("Répartition du nombre moyen d'absences par élève et par promotion : ");
+                        graphAbs.setTitleTextSize(30);
+                        graphAbs.getGridLabelRenderer().setVerticalAxisTitle("Nombre moyen d'absences");
+
+                        TextView tvNbrEleves = (TextView) findViewById(R.id.tvRepNbrEleves);
+                        TextView tvMoyAbs = (TextView) findViewById(R.id.tvRepMoyenneAbs);
+
+                        String nbrEleves = "";
+                        String moyenAbs = "";
+                        for (InfosDashBoardAbsences abs : infosAbs){
+                            nbrEleves = nbrEleves + abs.getPromo() + " : " + abs.getNbrEleves() + "      -      ";
+                            moyenAbs = moyenAbs + abs.getPromo() + " : " + abs.getNbrAbs() + "      -      ";
+                        }
+
+                        tvNbrEleves.setText(nbrEleves.substring(0,nbrEleves.length()-13));
+                        tvMoyAbs.setText(moyenAbs.substring(0,nbrEleves.length()-13));
 
                     }
                 }, new Response.ErrorListener() {

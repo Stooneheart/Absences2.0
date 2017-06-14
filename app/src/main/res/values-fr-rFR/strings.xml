@@ -66,4 +66,6 @@
     <string name="filtrer">Filtrer</string>
     <string name="defiltrer">Défiltrer</string>
     <string name="tableau_de_bord">Tableau de bord</string>
+    <string name="nom_compte">Nom de compte</string>
+    <string name="connexion_app">Authentification</string>
 </resources>

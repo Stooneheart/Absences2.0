@@ -10,5 +10,11 @@
     <item
         android:id="@+id/disconnect"
         android:title="@string/se_deconnecter"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/logo"
+        android:icon="@mipmap/logo_epf"
+        android:title="@string/logo_epf"
+        app:showAsAction="ifRoom" />
 </menu>

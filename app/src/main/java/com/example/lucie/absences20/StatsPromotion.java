@@ -413,13 +413,14 @@ public class StatsPromotion extends AppCompatActivity implements NavigationView.
 // draw values on top
                         series.setDrawValuesOnTop(true);
                         series.setValuesOnTopColor(Color.BLACK);
-                        series.setValuesOnTopSize(15);
+                        series.setValuesOnTopSize(20);
 
                         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
                         staticLabelsFormatter.setHorizontalLabels(datasName);
                         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
                         graph.getGridLabelRenderer().setLabelHorizontalHeight(80);
                         graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(25);
+                        graph.getGridLabelRenderer().setHorizontalAxisTitleTextSize(25);
 
                         graph.setTitle("Répartition des absences par matière de la promotion : " + promoName);
                         graph.setTitleTextSize(25);
