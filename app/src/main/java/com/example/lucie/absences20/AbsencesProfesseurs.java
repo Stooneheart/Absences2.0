@@ -351,7 +351,7 @@ public class AbsencesProfesseurs extends AppCompatActivity implements Navigation
         rechercheProf.setText(null);
         adapter.getUnfilter();
         mListView.setAdapter(adapter);
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.absences_prom);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.absences_prof);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
     }

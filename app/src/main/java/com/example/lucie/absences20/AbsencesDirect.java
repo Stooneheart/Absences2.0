@@ -44,7 +44,7 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
     private Spinner spinner;
     private String[] lesNomCours;
     private String[] lesIdCours;
-    private String coursAVisu;
+    private String coursAVisu = "";
     private String idCoursAVisu;
 
     protected void onCreate (Bundle savedInstanceState){
@@ -356,13 +356,18 @@ public class AbsencesDirect extends AppCompatActivity implements NavigationView.
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, AbsencesElevesDirect.class);
-        intent.putExtra("cours", coursAVisu);
-        intent.putExtra("idCours", idCoursAVisu);
-        intent.putExtra("lesCours", lesNomCours);
-        intent.putExtra("lesIdCours", lesIdCours);
-        intent.putExtra("user", userInfos);
-        intent.putExtra("token", token);
-        startActivity(intent);
+
+        if (coursAVisu.equals("")){
+
+        } else {
+            Intent intent = new Intent(this, AbsencesElevesDirect.class);
+            intent.putExtra("cours", coursAVisu);
+            intent.putExtra("idCours", idCoursAVisu);
+            intent.putExtra("lesCours", lesNomCours);
+            intent.putExtra("lesIdCours", lesIdCours);
+            intent.putExtra("user", userInfos);
+            intent.putExtra("token", token);
+            startActivity(intent);
+        }
     }
 }

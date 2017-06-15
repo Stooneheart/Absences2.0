@@ -72,11 +72,10 @@
     <string name="defiltrer">Unfilter</string>
 
     <string-array name="status">
-        <item>absence justifiee</item>
+        <item>justifiee</item>
         <item>absent</item>
         <item>depart anticipe</item>
         <item>retard</item>
-        <item>exclu</item>
     </string-array>
     <string name="absences_direct">LIVE absences</string>
     <string name="tableau_de_bord">Dashboard</string>

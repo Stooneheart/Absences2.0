@@ -201,7 +201,7 @@ public class TotalsAbsences extends AppCompatActivity implements NavigationView.
         recherche.setText(null);
         adapter.getUnfilter();
         mListView.setAdapter(adapter);
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.absences_prom);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.totals_absences);
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
     }
